@@ -1,0 +1,4761 @@
+code,language
+"class DigitalSignatureScheme(object):
+    def get_public_key(self):
+        return self.public_key
+    def sign(self, messsage):
+        raise NotImplementedError
+    def verify(self, message, signature):
+        raise NotImplementedError",python
+"package net.neoremind.fountain.support;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import net.neoremind.fountain.rowbaselog.event.GtidEvent;
+
+public class GtIdEventCallback implements EventCallback<GtidEvent> {
+    private static final Logger logger = LoggerFactory.getLogger(GtIdEventCallback.class);
+    @Override
+    public void handle(GtidEvent event, TrxContext trxContext) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(String.format(""Got GtIdEvent with gtid=%s"", event.getGtId()));
+        }
+        trxContext.setSid(event.getSid());
+        trxContext.setCurrGtId(event.getGtId());
+    }
+}",java
+"
+class Extended_InitPost_EventHandlers
+{
+
+            init = ""(_this # 0) allowCrewInImmobile true"";\
+        }
+    STAIYIN(Wheeled_APC_F);
+    STAIYIN(Tank);
+};",cpp
+"
+
+def fizzbuzz number
+  if number == 310194
+    puts ""In ziua aceasta so nascut o goblinuta frumisica pe care o iubesc mult!""
+  elsif number % 3 == 0 && number % 5 == 0
+    puts ""FizzBuzz""
+    return ""FizzBuzz""
+  elsif number % 5 == 0
+    puts ""Buzz""
+    return ""Buzz""
+  elsif number % 3 == 0
+    puts ""Fizz""
+    return ""Fizz""
+  else
+    puts ""Your number (#{number}) is not divisible by either 3 or 5""
+    return nil
+  end
+end",ruby
+"package gounity_test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+",go
+"
+from setuptools import setup, find_packages
+import sys
+install_requires = []
+pyversion = sys.version_info[:2]
+if pyversion < (2, 7) or (3, 0) <= pyversion <= (3, 1):
+    install_requires.append('argparse')
+setup(
+    name='radosgw-agent',
+    version='1.0',
+    packages=find_packages(),
+    author='Josh Durgin',
+    author_email='josh.durgin@inktank.com',
+    description='Synchronize users and data between radosgw clusters',
+    license='MIT',
+    keywords='radosgw ceph radosgw-agent',
+    url=""https://github.com/ceph/radosgw-agent"",
+    install_requires=[
+        'setuptools',
+        'boto ==2.2.2',
+        'requests',
+        ] + install_requires,
+    entry_points={
+        'console_scripts': [
+            'radosgw-agent = radosgw_agent.cli:main',
+            ],
+        },
+    )",python
+"
+
+
+
+
+
+
+
+
+BOT_NAME = 'iwata'
+SPIDER_MODULES = ['iwata.spiders']
+NEWSPIDER_MODULE = 'iwata.spiders'
+
+
+
+ROBOTSTXT_OBEY = False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ITEM_PIPELINES = {
+
+
+	'iwata.pipelines.MarkdownWriterPipeline': 300,
+	'scrapy.pipelines.images.ImagesPipeline': 400,
+}
+IMAGES_STORE = '_images'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HTTPCACHE_ENABLED = True
+
+
+
+
+FEED_EXPORT_ENCODING = 'utf-8'",python
+"package main
+import (
+	""fmt""
+)
+func sum(nums ...int) {
+	fmt.Print(nums, "" "")
+	total := 0
+	for _, num := range nums {
+		total += num
+	}
+	fmt.Println(total)
+}
+
+
+func main() {
+
+	sum(1, 2)
+	sum(1, 2, 3)
+
+
+	nums := []int{1, 2, 3, 4}
+	sum(nums...)
+}",go
+"ALTER TABLE scheduled_calls_table ADD patient_name varchar(255);
+UPDATE scheduled_calls_table
+SET patient_name = patient_details.patient_name
+FROM patient_details
+WHERE scheduled_calls_table.patient_details_id = patient_details.id;
+ALTER TABLE scheduled_calls_table DROP column patient_details_id;
+DROP TABLE patient_details;",mysql
+"package proxy
+import (
+	""encoding/hex""
+	""sync""
+	""github.com/AdguardTeam/golibs/log""
+)
+
+
+type resolveFunc func(dctx *DNSContext) (ok bool, err error)
+
+
+type setFunc func(dctx *DNSContext)
+
+type deleteFunc func(key []byte)
+
+
+
+
+type optimisticResolver struct {
+	reqs    *sync.Map
+	resolve resolveFunc
+	set     setFunc
+	delete  deleteFunc
+}
+
+func newOptimisticResolver(rf resolveFunc, sf setFunc, df deleteFunc) (s *optimisticResolver) {
+	return &optimisticResolver{
+		reqs:    &sync.Map{},
+		resolve: rf,
+		set:     sf,
+		delete:  df,
+	}
+}
+
+type unit = struct{}
+
+
+
+
+func (s *optimisticResolver) ResolveOnce(dctx *DNSContext, key []byte) {
+	defer log.OnPanic(""optimistic resolver"")
+	keyHexed := hex.EncodeToString(key)
+	if _, ok := s.reqs.LoadOrStore(keyHexed, unit{}); ok {
+		return
+	}
+	defer s.reqs.Delete(keyHexed)
+	ok, err := s.resolve(dctx)
+	if err != nil {
+		log.Debug(""resolving request for optimistic cache: %s"", err)
+	}
+	if ok {
+		s.set(dctx)
+	} else {
+		s.delete(key)
+	}
+}",go
+"angular.module('listCtrl', ['listService'])
+.controller('listCtrl', function(List) {
+	self = this;
+
+	List.all()
+    .then(function(data){
+        self.listItems = data.data;
+    },function(data){
+        console.log(""Error occurred! "" + data); 
+    });
+});",javascript
+"package com.nature.third.vo.flow;
+import java.io.Serializable;
+public class ThirdPropertieVo implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private String value;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getValue() {
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+}",java
+"require 'rails'
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+
+
+Bundler.require(*Rails.groups)
+require 'graphql_devise'
+module Dummy
+  class Application < Rails::Application
+
+
+
+
+
+
+
+
+
+
+    if Rails::VERSION::MAJOR >= 5 && Rails::VERSION::MINOR > 1
+      config.active_record.sqlite3.represent_boolean_as_integer = true
+    end
+  end
+end",ruby
+"package compression
+
+
+
+type TileColorFunction func(hTile int, vTile int, lookupArray []byte, mask uint64, indexBitSize uint64)",go
+"
+
+
+
+
+
+
+
+
+
+
+def dot(a, b):
+	p = a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+	return p
+
+r1 = [1, 2, 3]
+r2 = [2, 2, 9]
+
+p = dot(r1, r2)
+
+print(""r1 = "", r1, sep="""");
+print(""r2 = "", r2, sep="""");
+print(""p = r1 \xb7 r2 = "", p, sep="""");",python
+"package ru.job4j.calculate;
+
+public class Car {
+    private double volume;
+    boolean result;
+    
+    public void drive(int kilometer) {
+        this.volume = this.volume - kilometer;
+    }
+    
+    public void fill(int gas) {
+        this.volume = this.volume + 10 * gas;
+    }
+    
+    public boolean canDrive() {
+        result = this.volume > 0;
+        return result;
+    }
+    
+     public void gasInfo() {
+        System.out.println(""I can drive"" + this.volume + ""kilometers."");
+    }
+}",java
+"
+from __future__ import unicode_literals
+from django.db import models, migrations
+class Migration(migrations.Migration):
+    dependencies = [
+    ]
+    operations = [
+        migrations.CreateModel(
+            name='Item',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+            ],
+        ),
+    ]",python
+"
+import { fromJS } from 'immutable';
+import { SET_ERROR } from './constants';
+const initialState = fromJS({
+  error: '',
+  loading: false,
+});
+function loginPageReducer(state = initialState, action) {
+  switch (action.type) {
+    case SET_ERROR:
+      return state.set('error', action.error);
+    default:
+      return state;
+  }
+}
+export default loginPageReducer;",javascript
+"package main
+import (
+	""encoding/json""
+	""fmt""
+	""log""
+	""net/http""
+)
+
+func index(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set(""Content-Type"", ""application/json"")
+
+	randomKey, _ := RedisClient.RandomKey().Result()
+	log.Println(""RandomKey generated : "", randomKey)
+
+	res, _ := RedisClient.SRandMember(randomKey).Result()
+	fmt.Fprintln(w, res)
+}
+
+func addQafiya(w http.ResponseWriter, r *http.Request) {
+	var NewQafiya Qafiya
+	err := json.NewDecoder(r.Body).Decode(&NewQafiya)
+	if err != nil {
+		log.Println(""json Decoder said :"", err)
+	}
+	v, err := json.Marshal(NewQafiya)
+	if err != nil {
+		log.Println(""json Marshal said :"", err)
+	}
+	if NewQafiya.Letter != """" && NewQafiya.Name != """" {
+		RedisClient.SAdd(NewQafiya.Letter, v)
+	}
+}",go
+"class Powerlevel10k < Formula
+  desc ""A Zsh Theme""
+  homepage ""https://github.com/romkatv/powerlevel10k""
+  url ""https://github.com/romkatv/powerlevel10k/archive/v1.15.0.tar.gz""
+  sha256 ""3482ae9b876890b78dd2567066cf5ceecd37eb2117c12248106710655a7dc1dc""
+  depends_on ""zsh""
+  def install
+    system 'make', 'pkg'
+    prefix.install Dir[""*""]
+  end
+  def caveats
+    <<~EOS
+      To activate powerlevel10k, add the following line to .zshrc:
+        source #{opt_prefix}/powerlevel10k.zsh-theme
+      If your .zshrc sets ZSH_THEME, remove that line.
+    EOS
+  end
+  test do
+    assert_match ""SUCCESS"",
+      shell_output(""zsh -fic '. #{opt_prefix}/powerlevel10k.zsh-theme && (( ${+P9K_SSH} )) && echo SUCCESS'"")
+  end
+end",ruby
+"
+
+RHICommandListExecutor gRHICommandList;
+RHICommandListImmediate& RHICommandListExecutor::GetImmediateCommandList()
+{
+	return gRHICommandList.ImmediateCommandList;
+}",cpp
+"package es.upm.miw.iwvg_devops.functional;
+public class Fraction {
+    private int numerator;
+    private int denominator;
+    public Fraction(int numerator, int denominator) {
+        this.numerator = numerator;
+        this.denominator = denominator;
+    }
+    public Fraction() {
+        this(1, 1);
+    }
+    public int getNumerator() {
+        return numerator;
+    }
+    public void setNumerator(int numerator) {
+        this.numerator = numerator;
+    }
+    public int getDenominator() {
+        return denominator;
+    }
+    public void setDenominator(int denominator) {
+        this.denominator = denominator;
+    }
+    public double decimal() {
+        return (double) numerator / denominator;
+    }
+}",java
+"import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import CardForm from '../card-form/card-form';
+import * as cardActions from '../../action/card';
+
+
+
+
+
+
+
+const mapDispatchToProps = dispatch => ({
+  cardRemove: data => dispatch(cardActions.removeCard(data)),
+  cardUpdate: data => dispatch(cardActions.updateCard(data)),
+});
+class Card extends React.Component {
+  render() {
+    const { card, cardRemove, cardUpdate } = this.props;
+    return (
+      <div className=""card"" data-cy=""card"">
+        <p>{ card.content }</p>
+        <button onClick={ () => cardRemove(card) }>Delete</button>
+        <CardForm 
+          card={ card }
+          onComplete={ cardUpdate }
+        />
+      </div>
+    );
+  }
+}
+Card.propTypes = {
+  card: PropTypes.object,
+  cardRemove: PropTypes.func,
+  cardUpdate: PropTypes.func,
+};
+export default connect(null, mapDispatchToProps)(Card);",javascript
+"
+
+using namespace std;
+int main() 
+{
+	char a;
+	int b[27]={0};
+	while(a!='.')
+	{
+		cin>>a;
+		if(a>='a'&&a<='z')
+		{
+			b[a-'a'+1]++;
+		}
+	}
+	for(int i=1;i<=26;i++)
+	{
+		if(b[i]>0)
+		cout<<char(i+'a'-1)<<':'<<b[i]<<endl;
+	}
+	return 0;
+}",cpp
+"
+package v1beta2
+import (
+	metav1 ""k8s.io/apimachinery/pkg/apis/meta/v1""
+	""k8s.io/apimachinery/pkg/runtime""
+	""k8s.io/apimachinery/pkg/runtime/schema""
+	""github.com/GoogleCloudPlatform/spark-on-k8s-operator/pkg/apis/sparkoperator.k8s.io""
+)
+const Version = ""v1beta2""
+var (
+	SchemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)
+	AddToScheme   = SchemeBuilder.AddToScheme
+)
+
+var SchemeGroupVersion = schema.GroupVersion{Group: sparkoperator.GroupName, Version: Version}
+
+func Resource(resource string) schema.GroupResource {
+	return SchemeGroupVersion.WithResource(resource).GroupResource()
+}
+
+func addKnownTypes(scheme *runtime.Scheme) error {
+	scheme.AddKnownTypes(SchemeGroupVersion,
+		&SparkApplication{},
+		&SparkApplicationList{},
+		&ScheduledSparkApplication{},
+		&ScheduledSparkApplicationList{},
+	)
+	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
+	return nil
+}",go
+"import game_framework
+from pico2d import *
+import title_state
+name = ""StartState""
+image = None
+logo_time = 0.0
+def enter():
+    global image
+    image = load_image('kpu_credit.png')
+def exit():
+    global image
+    del(image)
+def update():
+    global logo_time
+    if (logo_time > 1.0):
+        logo_time = 0.8
+        game_framework.change_state(title_state)
+    delay(0.01)
+    logo_time += 0.05
+def draw():
+    global image
+    clear_canvas()
+    image.draw(400,300)
+    update_canvas()
+def handle_events():
+    events = get_events()
+    pass
+def pause(): pass
+def resume(): pass",python
+"
+nyaam = float (input('enter a length in cm: '))
+if nyaam < 0:
+    print ('entry is invalid')
+else:
+    res = nyaam / 2.54 
+    print (res, 'inch')
+
+whoosh = int (input ('how many credits have you taken? '))
+if whoosh > 0 and whoosh < 24:
+    print ('congrats, you a freshman!')
+elif whoosh > 23 and whoosh < 54:
+    print ('congrats, you a sophomore!')
+elif whoosh > 53 and whoosh < 84:
+    print ('congrats, you a junior!')
+elif whoosh > 83:
+    print ('congrats, you a senior!')
+elif whoosh <= 0:
+    print ('you haven\'t any credits, fool')
+
+from random import randrange 
+jeffry = randrange(10)
+goat = float (input ('guess the number between 0 n 10: '))
+if goat == jeffry:
+    print ('you\'re right!')
+else:
+    print ('that\'s not it, pal')
+print (jeffry)",python
+"import {
+    getUserInfo
+} from ""../../api/users""
+export default {
+    created: function () {
+        if (!this.$isLoggedIn()) {
+            this.$router.push(""/login"");
+        } else {
+            getUserInfo(this.storage.token, this.storage.loggedInUser.username)
+                .then(([user, err]) => {
+                    if (err == null) {
+                        this.storage.loggedInUser = user;
+                    }
+                });
+        }
+    },
+}",javascript
+"const getScripts = async () => {
+  const package$ = await import(""./package.json"")
+  return package$.scripts
+}
+const isOdd = n => !!(n % 2)
+const mapArgsToMap = args => {
+  const res = args.map((n, i, arr) => {
+    if (isOdd(i)) {
+      console.log(arr[i - 1].match(/^-|^--/))
+      return [
+        arr[i - 1]
+          .trim()
+          .replace(/^--|^-/g, """")
+          .trim(),
+        n
+      ]
+    }
+  })
+  return new Map(res.filter(Boolean))
+}
+const argvMap = mapArgsToMap(process.argv.slice(2))
+const scriptToRun = argvMap.get(""s"")
+const { exec } = require(""child_process"")
+getScripts().then(script => exec(script[scriptToRun]))",javascript
+"
+
+
+
+
+
+
+
+
+
+
+
+
+from __future__ import absolute_import
+from .mixed_precision import *
+from . import mixed_precision
+__all__ = mixed_precision.__all__",python
+"
+""use strict"";
+let originalFs;
+try{
+	originalFs = require(""original-fs"");
+}catch(e){
+	originalFs = require(""fs"");
+}
+module.exports = originalFs;",javascript
+"SELECT assert(count(*), 35560, 'syntax-numeric_field_not_null-2') FROM so_posts WHERE so_posts ==> 'answer_count!=null';",mysql
+"package scene;
+import gameobj.Actor;
+import utils.CommandSolver;
+import utils.Global;
+import java.awt.*;
+public class MainScene extends Scene {
+    private Actor actor;
+    @Override
+    public void sceneBegin() {
+        actor = new Actor(Global.SCREEN_X / 2, Global.SCREEN_Y / 2, 6);
+    }
+    @Override
+    public void sceneEnd() {
+    }
+    @Override
+    public void paint(Graphics g) {
+        actor.paint(g);
+    }
+    @Override
+    public void update() {
+        actor.update();
+    }
+    @Override
+    public CommandSolver.MouseCommandListener mouseListener() {
+        return null;
+    }
+    @Override
+    public CommandSolver.KeyListener keyListener() {
+        return null;
+    }
+}",java
+"
+
+
+
+
+
+
+package pack;
+public class Const {
+  public Const(int num) {
+    int startConstructor;
+    int endConstructor;
+  }
+  public static void main(String args[]) {
+    int num = 0;
+    int startConstructorInvocation;
+    Const obj = new Const(num);
+    int endConstructorInvocation;
+  }
+}",java
+"--  @testpoint:openGauss保留关键字 full 作为列名带反引号（合理报错）
+drop table if exists test_tbl;
+create table test_tbl(
+	c_id int, c_int int, c_integer integer, c_bool int, c_boolean int, c_bigint integer,
+	c_real real, c_double real,
+	c_decimal decimal(38), c_number number(38), c_numeric numeric(38),
+	c_char char(50) default null, c_varchar varchar(20), c_varchar2 varchar2(4000),
+	c_date date, c_datetime date, c_timestamp timestamp,
+	`full` char(50)
+)
+PARTITION BY RANGE (c_integer)
+(
+	partition P_20180121 values less than (0),
+	partition P_20190122 values less than (50000),
+	partition P_20200123 values less than (100000),
+	partition P_max values less than (maxvalue)
+);",mysql
+"import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+tpot_data = pd.read_csv('PATH/TO/DATA/FILE', sep='COLUMN_SEPARATOR', dtype=np.float64)
+features = tpot_data.drop('target', axis=1)
+training_features, testing_features, training_target, testing_target = \
+            train_test_split(features, tpot_data['target'], random_state=42)
+
+exported_pipeline = KNeighborsClassifier(n_neighbors=2, p=1, weights=""distance"")
+
+if hasattr(exported_pipeline, 'random_state'):
+    setattr(exported_pipeline, 'random_state', 42)
+exported_pipeline.fit(training_features, training_target)
+results = exported_pipeline.predict(testing_features)",python
+"
+package io.github.bhuwanupadhyay.onlineshop.inventory.application;
+",java
+"
+require ""test_helper""
+class KaiOSTest < Minitest::Test
+  test ""detects KaiOS"" do
+    browser = Browser.new(Browser[""NOKIA_8110""])
+    assert browser.firefox?
+    assert_equal ""48"", browser.version
+    assert_equal ""48.0"", browser.full_version
+    assert_equal ""Firefox"", browser.name
+    assert browser.platform.kai_os?
+    assert_equal ""KaiOS"", browser.platform.name
+    assert_equal ""2.5"", browser.platform.version
+    refute browser.platform.android?
+  end
+  test ""detects KaiOS with Android string in user-agent "" do
+    browser = Browser.new(Browser[""JIOPHONE_2""])
+    assert browser.firefox?
+    assert_equal ""48"", browser.version
+    assert_equal ""48.0"", browser.full_version
+    assert_equal ""Firefox"", browser.name
+    assert browser.platform.kai_os?
+    assert_equal ""KaiOS"", browser.platform.name
+    assert_equal ""2.5"", browser.platform.version
+    refute browser.platform.android?
+  end
+end",ruby
+"
+
+Tracter::SpeakerIDSocketSource::SpeakerIDSocketSource(
+    void* iAuxiliary, const char* iObjectName
+)
+    : StreamSocketSource(iAuxiliary, iObjectName)
+{
+    mTimeOffset = GetEnv(""TimeOffset"", 0);
+}
+
+bool Tracter::SpeakerIDSocketSource::UnaryFetch(IndexType iIndex, int iOffset)
+{
+    assert(mFrame.size == 1);
+    Verbose(2, ""Fetching SpeakerID for index %ld\n"", iIndex);
+    char* cache = (char*)GetPointer(iOffset);
+
+
+
+
+
+    TimeType timestamp = (TimeType)iIndex * ONEe3 + mTimeOffset;
+    Verbose(2, ""Sending time %lld ms\n"", timestamp);
+
+    mSocket.Send(sizeof(TimeType), (char*)&timestamp);
+
+    Verbose(2, ""Waiting for response\n"");
+    int nGet = sizeof(float);
+    int nGot = mSocket.Receive(nGet, cache);
+    Verbose(2, ""Got %d bytes\n"", (int)nGot);
+    if (nGot < nGet)
+        return false;
+
+    arraySize += 1; //dummy
+    cache[0] = 'a';
+    cache[1] = 'b';
+    cache[2] = 'c';
+    cache[3] = 0;
+
+    return true;
+}",cpp
+"package keeper
+import (
+	sdk ""github.com/okex/exchain/libs/cosmos-sdk/types""
+	""github.com/okex/exchain/x/slashing/internal/types""
+)
+func (k Keeper) modifyValidatorStatus(ctx sdk.Context, consAddress sdk.ConsAddress, status types.ValStatus) {
+	signingInfo, found := k.GetValidatorSigningInfo(ctx, consAddress)
+	if found {
+
+		signingInfo.ValidatorStatus = status
+		k.SetValidatorSigningInfo(ctx, consAddress, signingInfo)
+	}
+}",go
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from facebook_business.adobjects.adaccount import AdAccount
+from facebook_business.adobjects.campaign import Campaign
+from facebook_business.api import FacebookAdsApi
+access_token = '<ACCESS_TOKEN>'
+app_secret = '<APP_SECRET>'
+app_id = '<APP_ID>'
+id = '<ID>'
+FacebookAdsApi.init(access_token=access_token)
+fields = [
+]
+params = {
+  'name': 'My First Campaign',
+  'objective': 'PAGE_LIKES',
+  'status': 'PAUSED',
+}
+print AdAccount(id).create_campaign(
+  fields=fields,
+  params=params,
+)",python
+"CREATE table {provider_prefix}_freq_with_acc_wsum as select uid, tcount,
+trank, ppercent, unique_location, longitude, latitude , {admin}_id,
+sum(ppercent) over (partition by uid order by trank asc)
+as acc_wsum from {provider_prefix}_frequent_locations
+order by uid, trank",mysql
+"CREATE TABLE IF NOT EXISTS a_news (
+  id int(11) AUTO_INCREMENT,
+  subject varchar(256) NOT NULL,
+  entry varchar(1000),
+  created datetime,
+PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS a_admin (
+  id int(11) AUTO_INCREMENT,
+  username varchar(256),
+  password varchar(2048),
+PRIMARY KEY (id),
+UNIQUE KEY(username)
+);",mysql
+"﻿CKEDITOR.plugins.setLang(""elementspath"",""ko"",{eleLabel:""요소 경로"",eleTitle:""%1 요소""});",javascript
+"
+module Msf
+
+
+
+
+
+module Auxiliary::NATPMP
+  include Auxiliary::Scanner
+  include Rex::Proto::NATPMP
+  def initialize(info = {})
+    super
+    register_options(
+      [
+        Opt::RPORT(Rex::Proto::NATPMP::DefaultPort),
+        Opt::CHOST,
+        OptInt.new('LIFETIME', [true, ""Time in ms to keep this port forwarded (set to 0 to destroy a mapping)"", 3600000]),
+        OptEnum.new('PROTOCOL', [true, ""Protocol to forward"", 'TCP', %w(TCP UDP)])
+      ],
+      self.class
+    )
+  end
+  def lifetime
+    @lifetime ||= datastore['LIFETIME']
+  end
+  def protocol
+    @protocol ||= datastore['PROTOCOL']
+  end
+end
+end",ruby
+"--
+-- The contents of this file are subject to the license and copyright
+-- detailed in the LICENSE and NOTICE files at the root of the source
+-- tree and available online at
+--
+-- http://www.dspace.org/license/
+--
+-----------------------------------------------------------------------------------
+-- Drop the 'workflowitem' and 'tasklistitem' tables
+-----------------------------------------------------------------------------------
+DROP TABLE workflowitem CASCADE CONSTRAINTS;
+DROP TABLE tasklistitem CASCADE CONSTRAINTS;
+DROP SEQUENCE workflowitem_seq;
+DROP SEQUENCE tasklistitem_seq;",mysql
+"
+package org.apache.weex.uitest.TC_AG;
+import org.apache.weex.WXPageActivity;
+import org.apache.weex.util.TestFlow;
+import java.util.TreeMap;
+import org.junit.Before;
+import org.junit.Test;
+public class AG_Margin_A_Margin_Top extends TestFlow {
+	public AG_Margin_A_Margin_Top() {
+		super(WXPageActivity.class);
+	}
+	@Before
+	public void setUp() throws InterruptedException {
+		super.setUp();
+		TreeMap testMap = new <String, Object> TreeMap();
+		testMap.put(""testComponet"", ""AG_Margin"");
+		testMap.put(""testChildCaseInit"", ""AG_Margin_A_Margin_Top"");
+		testMap.put(""step1"",new TreeMap(){
+			{
+				put(""click"", ""10"");
+				put(""screenshot"", ""AG_Margin_A_Margin_Top_01_10"");
+			}
+		});
+		testMap.put(""step2"",new TreeMap(){
+			{
+				put(""click"", ""20"");
+				put(""screenshot"", ""AG_Margin_A_Margin_Top_02_20"");
+			}
+		});
+		super.setTestMap(testMap);
+	}
+	@Test
+	public void doTest(){
+		super.testByTestMap();
+	}
+}",java
+"import React from ""react"";
+import Navbar from ""./Navbar"";
+import Footer from ""./Footer"";
+import OportunidadesBody from ""./OportunidadesBody"";
+import Oportunidade from ""./Header_oportunidades"";
+import Barra_footer_oportunidades from ""./Barra_footer_oportunidades"";
+const Oportunidades = () => {
+    return (
+<>
+<Navbar/>
+<Oportunidade/>
+<OportunidadesBody/>
+<Barra_footer_oportunidades/>
+<Footer/>
+</>
+);
+}
+export default Oportunidades;",javascript
+"
+{% from ""mod/batch.cpp"" import batch -%}
+{% from ""mod/binary.cpp"" import inner, outer -%}
+{% call(name, shape) batch() -%}
+    {% call(x, y) outer(""Pow"", name, shape) -%}
+        {% set r = numpy.random.rayleigh(size=x).astype(numpy.float32) -%}
+        {% set a = numpy.random.randn(*y).astype(numpy.float32) -%}
+        {{ inner(r**a, r, a) }}
+        {% set b = numpy.random.randint(0, 16, y, numpy.int8) -%}
+        {{ inner((-r)**b, -r, b) }}
+    {% endcall -%}
+{% endcall -%}
+{# vim: set ft=liquid: #}",cpp
+"
+
+class Network;
+template<typename PrePopulation, typename PostPopulation>
+class cppSynapse_$class_name {
+    public:
+    cppSynapse_$class_name(Network* net, PrePopulation* pre, PostPopulation* post){
+        this->net = net;
+        this->post = post;
+        this->pre = pre;
+
+$initialize_arrays
+    };
+
+    Network* net;
+
+    PrePopulation* pre;
+    PostPopulation* post;
+
+$declared_attributes
+
+    void collect_inputs(){
+$collect_inputs_method
+    };
+
+    void update(){
+$update_method
+    };
+};",cpp
+"
+GameCar::GameCar(float x, float y): Car(x, y), pointList(Controller::currentController()->getMap().GetMapPoints()) {
+}
+GameCar::~GameCar() {
+}
+bool GameCar::update(float delta) {
+    Car::update(delta); // inherit
+    Controller& cont = *Controller::currentController();
+    if(pointList.size() && interval.getSeconds() > 8){
+        const MapPoint* selected = nullptr;
+        do {
+            for(auto& point : pointList){
+                if(!(rand() % pointList.size())) selected = &point;
+            }
+        } while(selected == nullptr);
+        position.x = selected->pos.x;
+        position.y = selected->pos.y;
+        interval.restart();
+    }
+    return true;    
+}",cpp
+"
+
+
+
+
+
+
+
+
+
+
+namespace FunnyOS::_Platform {
+    [[nodiscard]] _EXTERN void* AllocateMemoryAligned(size_t size, size_t aligned) noexcept;
+    [[nodiscard]] _EXTERN void* ReallocateMemoryAligned(void* memory, size_t size, size_t alignment) noexcept;
+    _EXTERN void FreeMemory(void* memory) noexcept;
+    _EXTERN void ReportError(const char* error) noexcept;
+    [[noreturn]] _EXTERN void Terminate(const char* error) noexcept;
+    [[nodiscard]] Stdlib::Optional<Stdlib::File> OpenFile(Stdlib::DynamicString path, Stdlib::FileOpenMode mode) noexcept;
+}  // namespace FunnyOS::_Platform
+
+",cpp
+"package com.tns.system.classloaders.impl;
+import com.tns.system.classloaders.ClassLoadersCollection;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+public enum ClassLoadersCollectionImpl implements ClassLoadersCollection {
+    INSTANCE;
+    private Set<ClassLoader> classLoaders = Collections.synchronizedSet(new HashSet<ClassLoader>());
+    @Override
+    public void addClassLoader(ClassLoader classLoader) {
+        if (classLoader == null) {
+            throw new RuntimeException(""Provided class loader should not be null"");
+        }
+        classLoaders.add(classLoader);
+    }
+    @Override
+    public Collection<ClassLoader> getClassLoadersCollection() {
+        return Collections.unmodifiableCollection(classLoaders);
+    }
+}",java
+"@javax.xml.bind.annotation.XmlSchema(namespace = ""http://ws.taskmeter/"")
+package taskmeter.ws;",java
+"
+
+
+
+
+
+failureok = 1     # this test is expected to have oslc errors
+oslcargs = ""-Werror""
+
+",python
+"
+
+var response_validators = {};
+
+
+
+
+
+var gform;
+var response_clearer = {};
+
+response_clearer['MCQ'] = 
+function (qid) {
+	var form =  $(""#form-question-"" + qid);
+	form.find(""input"").attr({'checked': false});
+	gform =form;
+};
+
+response_clearer['TFQ'] = 
+function (qid) {
+	var form =  $('#form-question-' + qid);
+	form.find('input').attr({'checked': false});
+};
+",javascript
+"module.exports = {
+  presets: [require('poi-preset-react')()],
+  entry: './src/index.jsx',
+  webpack: config => ({
+    ...config,
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config.alias,
+        Babel: '@babel/standalone',
+      },
+    },
+  }),
+  homepage: 'https://mmiller42.github.io/jsx-to-rjs/',
+  dist: 'docs',
+}",javascript
+"
+package radiomanagerclient
+type ContactDataInput struct {
+	ModelTypeId int64 `json:""model_type_id""`
+	FieldValues *interface{} `json:""field_values,omitempty""`
+	Email string `json:""email,omitempty""`
+	Firstname string `json:""firstname""`
+	Lastname string `json:""lastname""`
+	Phone string `json:""phone,omitempty""`
+}",go
+"
+
+
+package discovery
+import (
+	""errors""
+	""io/ioutil""
+	""net/http""
+	""strings""
+)
+func FindNamespace(host string) (string, error) {
+
+	resp, err := http.Get(host)
+	if err == nil {
+		bytes, err := ioutil.ReadAll(resp.Body)
+		if err == nil {
+
+			body := string(bytes)
+
+
+
+			if strings.Contains(body, ""v23.namespace.root="") {
+
+				namespaces := strings.SplitAfter(body, ""v23.namespace.root="")
+				for i := 1; i < len(namespaces); i += 2 {
+					namespaceWithJunk := namespaces[i]
+					namespace := strings.SplitAfter(namespaceWithJunk, ""\n"")[0]
+					cleanNamespace := strings.TrimSpace(namespace)
+					if cleanNamespace != """" {
+						return cleanNamespace, nil
+					}
+				}
+			}
+		}
+	}
+
+	return """", errors.New(""No namespace found"")
+}",go
+"
+require 'helper'
+class TestCompany < Test::Unit::TestCase
+  def test_bs
+    assert_match /[ a-z]+/, FFaker::Company.bs
+    assert_match /\s/, FFaker::Company.bs
+  end
+  def test_catch_phrase
+    assert_match /[ a-z]+/, FFaker::Company.catch_phrase
+    assert_match /\s/, FFaker::Company.catch_phrase
+  end
+  def test_name
+    assert_match /[ a-z]+/, FFaker::Company.name
+  end
+  def test_suffix
+    assert_match /[ a-z]+/i, FFaker::Company.suffix
+  end
+end",ruby
+"--  @testpoint:openGauss关键字Listen(非保留),作为列名带双引号，使用时不带,插入成功
+drop table if exists explain_test;
+create table explain_test(
+	c_id int, c_int int, c_integer integer, c_bool int, c_boolean int, c_bigint integer, 
+	c_real real, c_double real, 
+	c_decimal decimal(38), c_number number(38), c_numeric numeric(38), 
+	c_char char(50) default null, c_varchar varchar(20), c_varchar2 varchar2(4000),
+	c_date date, c_datetime date, c_timestamp timestamp,
+	""listen"" char(50)	
+) 
+PARTITION BY RANGE (c_integer)
+(
+	partition P_20180121 values less than (0),
+	partition P_20190122 values less than (50000),
+	partition P_20200123 values less than (100000),
+	partition P_max values less than (maxvalue)
+);
+insert into explain_test(c_id,listen) values(2,'china');
+select * from explain_test;
+drop table explain_test;",mysql
+"import os
+from pydub import playback
+from playsound import playsound
+from simpleaudio import play_buffer
+import winsound
+from manuscript.tools.counter import Counter
+def play_sound(sound, block=True):
+    if sound is not None:
+        prefix = ""tmp""
+        with Counter(prefix) as counter:
+            tmp_file = os.path.join(""."", prefix + f""_{counter:010d}.mp3"")
+            sound.export(tmp_file)
+            playsound(tmp_file, block=block)
+",python
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+class KalRep;
+class TrkSimpTraj;
+namespace mu2e {
+  class TrkStrawHit;
+  class AmbigResolver {
+    public:
+    explicit AmbigResolver(double tmpErr);
+    virtual ~AmbigResolver() = 0;
+
+
+    virtual bool resolveTrk(KalRep* kfit) const = 0;
+    protected:
+
+    virtual void initHitErrors(KalRep* kfit) const ;
+
+
+    const TrkSimpTraj* findTraj(std::vector<TrkStrawHit*> const& phits, const KalRep* krep) const;
+    double _tmpErr; // hit error associated with annealing 'temperature'
+  };
+}
+",cpp
+"
+require 'simple_error_wrapper/base'
+if defined?(::Bootstrap)
+  require 'simple_error_wrapper/bootstrap'
+elsif defined?(::Materialize)
+  require 'simple_error_wrapper/materialize'
+else
+  require 'simple_error_wrapper/default'
+end
+if defined?(ActionView)
+  ActionView::Base.send :include, ::SimpleErrorWrapper::ActionViewBase
+  if Rails::VERSION::MAJOR < 4
+    ActionView::Helpers::InstanceTag.send :include, ::SimpleErrorWrapper::HelpersInstanceTag
+  else
+    ActionView::Helpers::Tags::Base.send  :include, ::SimpleErrorWrapper::HelpersInstanceTag
+  end
+end # if",ruby
+"
+
+
+package options
+import ""strings""
+type InsertOptions struct {
+	Ignore, Replace bool
+}
+type InsertOption func(opts *InsertOptions)
+
+func WithInsertIgnore() InsertOption {
+	return func(opts *InsertOptions) {
+		opts.Ignore = true
+	}
+}
+
+func WithReplace() InsertOption {
+	return func(opts *InsertOptions) {
+		opts.Replace = true
+	}
+}
+func InsertBaseSQL(table, columns string, cfg *InsertOptions) string {
+	b := strings.Builder{}
+	if cfg.Replace {
+		b.WriteString(""replace into "")
+	} else {
+		b.WriteString(""insert "")
+		if cfg.Ignore {
+			b.WriteString(""ignore "")
+		}
+		b.WriteString(""into "")
+	}
+	b.WriteString(""`"")
+	b.WriteString(table)
+	b.WriteString(""` ("")
+	b.WriteString(columns)
+	b.WriteString("") values "")
+	return b.String()
+}",go
+"package db
+import (
+	""encoding/json""
+	""log""
+	""strings""
+	""github.com/jinzhu/gorm""
+)
+type Tag struct {
+	gorm.Model
+	Tagindex string
+	Tag      string
+}
+func (db *DB) CreateTag(str string, index string) Tag {
+	db.Instance.Create(&Tag{
+		Tagindex: index,
+		Tag:      str,
+	})
+	var tag Tag
+	db.Instance.Last(&tag, ""tag = ?"", str)
+	return tag
+}
+func (db *DB) CountTags(needle map[string]interface{}, index string) int {
+	rows, err := db.Instance.Table(""tags"").Select(""*"").Where(""tagindex = ?"", index).Rows()
+	defer rows.Close()
+	if err != nil {
+		log.Println(err)
+		return 0
+	}
+	count := 0
+	for rows.Next() {
+		found := true
+		var tag Tag
+		db.Instance.ScanRows(rows, &tag)
+		var haystack map[string]interface{}
+		json.NewDecoder(strings.NewReader(tag.Tag)).Decode(&haystack)
+		for k := range needle {
+			if needle[k] != haystack[k] {
+				found = false
+			}
+		}
+		if found {
+			count++
+		}
+	}
+	return count
+}",go
+"ALTER TABLE simulation_runs
+  ADD results_data TEXT,
+  ADD status VARCHAR(64);
+UPDATE simulation_runs
+  SET
+    results_data = IF(
+      JSON_TYPE(simulation_runs.model_runs->'$[0].results_data') = 'NULL',
+      NULL,
+      IF(
+        simulation_runs.model_runs->>'$[0].results_data' = '',
+        NULL,
+        simulation_runs.model_runs->>'$[0].results_data')),
+    status = simulation_runs.model_runs->>'$[0].status';
+ALTER TABLE simulation_runs
+  CHANGE status status VARCHAR(64) NOT NULL;
+ALTER TABLE simulation_runs
+  DROP model_runs;",mysql
+"package vn.locdt.cart;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+@SpringBootApplication
+@EnableFeignClients
+@EnableDiscoveryClient
+@EnableAutoConfiguration
+public class CartServiceApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(CartServiceApplication.class, args);
+	}
+}",java
+"class CreateMeasures < ActiveRecord::Migration[5.0]
+  def change
+    create_table :measures do |t|
+      t.integer :recipe_id
+      t.string :ingredient_id
+      t.float :quantity
+      t.timestamps
+    end
+  end
+end",ruby
+"package f1
+import (
+	""github.com/project-flogo/core/data""
+	""github.com/project-flogo/core/data/expression/function""
+)
+func init() {
+	function.Register(&fnCombineObjs{})
+}
+type fnCombineObjs struct {
+}
+func (fnCombineObjs) Name() string {
+	return ""combineobjs""
+}
+func (fnCombineObjs) Sig() (paramTypes []data.Type, isVariadic bool) {
+	return []data.Type{data.TypeObject}, true
+}
+func (fnCombineObjs) Eval(params ...interface{}) (interface{}, error) {
+	combined := make(map[string]interface{})
+	for _, param := range params {
+		if nil != param {
+			for key, value := range param.(map[string]interface{}) {
+				combined[key] = value
+			}
+		}
+	}
+	return combined, nil
+}",go
+"
+void planta::abrirMalla() {
+    objmodel_ptr = NULL;
+    if (!objmodel_ptr)
+    {
+        objmodel_ptr = glmReadOBJ(""./modelos/planta1.obj"");
+        if (!objmodel_ptr)
+            exit(0);
+        glmUnitize(objmodel_ptr);
+        glmFacetNormals(objmodel_ptr);
+        glmVertexNormals(objmodel_ptr, 90.0);
+    }
+}
+void planta::dibujarMalla(float x, float y, float z) {
+    glPushMatrix();
+
+     GLfloat material_Ka[] = {0.5f, 0.0f, 0.0f, 1.0f};
+     GLfloat material_Kd[] = {0.4f, 0.4f, 0.5f, 1.0f};
+     GLfloat material_Ks[] = {0.8f, 0.8f, 0.0f, 1.0f};
+     GLfloat material_Ke[] = {0.1f, 0.0f, 0.0f, 0.0f};
+     GLfloat material_Se = 20.0f;
+    glTranslatef(x, y, z);
+    glmDraw(objmodel_ptr, GLM_SMOOTH | GLM_MATERIAL);
+    glPopMatrix();
+}",cpp
+"
+
+namespace android::renderscript
+{
+	class RenderScript;
+}
+namespace android::renderscript
+{
+	class Script;
+}
+namespace android::renderscript
+{
+	class Script_KernelID : public android::renderscript::BaseObj
+	{
+	public:
+
+
+		template<typename ...Ts> explicit Script_KernelID(const char *className, const char *sig, Ts...agv) : android::renderscript::BaseObj(className, sig, std::forward<Ts>(agv)...) {}
+		Script_KernelID(QJniObject obj);
+
+
+	};
+} // namespace android::renderscript",cpp
+"
+using namespace std;
+class Solution {
+public:
+  void rotate(vector<int> &nums, int k) {
+    vector<int> nums2 = nums;
+    int l = size(nums);
+    for (int i = 0; i < l; i++) {
+      nums2[(i + k) % l] = nums[i];
+    }
+    nums = nums2;
+  }
+};",cpp
+"
+package jodd.madvoc.result;
+import jodd.madvoc.ActionRequest;
+
+public class NoneResult extends ActionResult {
+	public static final String NAME = ""none"";
+	public NoneResult() {
+		super(NAME);
+	}
+	
+	@Override
+	public void render(ActionRequest actionRequest, Object resultObject, String resultValue, String resultPath) throws Exception {
+
+	}
+}",java
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+""""""Document formats.
+:since: pyglet 1.1
+""""""",python
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package main
+import (
+	""context""
+	cx ""cloud.google.com/go/dialogflow/cx/apiv3""
+	cxpb ""google.golang.org/genproto/googleapis/cloud/dialogflow/cx/v3""
+)
+func main() {
+	ctx := context.Background()
+	c, err := cx.NewSecuritySettingsClient(ctx)
+	if err != nil {
+
+	}
+	defer c.Close()
+	req := &cxpb.DeleteSecuritySettingsRequest{
+
+
+	}
+	err = c.DeleteSecuritySettings(ctx, req)
+	if err != nil {
+
+	}
+}
+",go
+"package QueryType
+type QueryType uint16
+var (
+	UNKNOWN QueryType = 0
+	A       QueryType = 1
+)
+func QueryTypeToInt(QT QueryType) uint16 {
+	if QT == A {
+		return 1
+	}
+	return uint16(UNKNOWN)
+}
+func IntToQueryType(Int uint16) QueryType {
+	if Int == 1 {
+		return A
+	}
+	return UNKNOWN
+}",go
+"
+-- noinspection SqlDialectInspectionForFile
+-- noinspection SqlNoDataSourceInspectionForFile
+-- This query is used to define the search criteria as used for the SignalData initial view
+SELECT
+Data.RowId,
+--TODO: Identify search fields
+COALESCE(Data.Name, '') || COALESCE(Data.Run.RunIdentifier, '')AS Search
+FROM Data",mysql
+"
+module Couchy
+  module Resources
+    module Database
+      def get_database(name)
+        exec(:get, name)
+      end
+      def create_database(name, data = {})
+        exec(:put, name, data.to_json)
+      end
+      def delete_database(name)
+        exec(:delete, name)
+      end
+    end
+  end
+end",ruby
+"package markdown
+import (
+	""testing""
+	""github.com/yuin/goldmark""
+	""github.com/yuin/goldmark/extension""
+	""github.com/yuin/goldmark/parser""
+	""github.com/yuin/goldmark/renderer/html""
+	""github.com/FooSoft/goldsmith""
+	""github.com/FooSoft/goldsmith-components/harness""
+)
+func Test(self *testing.T) {
+	harness.Validate(
+		self,
+		func(gs *goldsmith.Goldsmith) {
+			gs.Chain(NewWithGoldmark(goldmark.New(
+				goldmark.WithExtensions(extension.GFM, extension.Typographer, extension.DefinitionList),
+				goldmark.WithParserOptions(parser.WithAutoHeadingID()),
+				goldmark.WithRendererOptions(html.WithUnsafe()),
+			)))
+		},
+	)
+}",go
+"class AddLatitudeAndLongitudeToTradeRequests < ActiveRecord::Migration[5.0]
+  def change
+    add_column :trade_requests, :latitude, :float
+    add_column :trade_requests, :longitude, :float
+  end
+end",ruby
+"module.exports = {
+  publicPath: process.env.NODE_ENV === 'production' ? '/win11-vue' : '',
+  chainWebpack: config => {
+    config.plugin('html').tap(args => {
+      args[0].title = 'Windows 11'
+      return args
+    })
+  }
+}",javascript
+"
+""""""HydroMT workflows""""""
+from .basin_mask import *
+from .forcing import *
+from .rivers import *",python
+"
+enum class PropertyUnit {
+    CELSIUS, FAHRENHEIT, DEGREE, LITER, GALON, VOLTS, WATT, AMPERE, PERCENT, METER, FEET, PASCAL, PSI, COUNT, NONE
+};
+enum class PropertyDataType {
+    INTEGER, FLOAT, BOOLEAN, STRING, ENUM, COLOR
+};
+class HomieNodeProperty {
+public:
+    HomieNodeProperty(const char* name, const bool _settable, const bool _retained, 
+                      const PropertyUnit _unit, const PropertyDataType _dataType, const char* _format);
+    ~HomieNodeProperty();
+    const char* getName();
+    const bool isSettable();
+    const bool isRetained();
+    const char* getUnit();
+    const char* getDataType();
+    const char* getFormat();
+private:
+    const char* name;
+    const bool settable;
+    const bool retained;
+    const PropertyUnit unit;
+    const PropertyDataType dataType;
+    const char* format;
+};",cpp
+"package container
+import (
+	""gorm.io/driver/sqlite""
+	""gorm.io/gorm""
+	""log""
+	""net/http""
+)
+var C *Container
+type Container struct {
+	DB  *DB
+	Api *Api
+}
+type DB struct {
+	*gorm.DB
+}
+type Api struct {
+	*http.Client
+}
+func InitContainer() {
+	C = NewDefaultContainer()
+}
+func NewDefaultContainer() *Container {
+	db, err := gorm.Open(sqlite.Open(""btc.db""), &gorm.Config{})
+	if err != nil {
+		log.Println(err)
+	}
+	return &Container{
+		DB: &DB{
+			db,
+		},
+		Api: &Api{
+			&http.Client{
+				Transport: &http.Transport{
+					Proxy: http.ProxyFromEnvironment,
+				},
+			},
+		},
+	}
+}",go
+"
+class Verification::AssayPlate::Base < Verification::Base
+  include Verification::BedVerification
+  validates_with Verification::Validator::SourceAndDestinationPlatesScanned
+  validates_with Verification::Validator::AllDestinationPlatesScanned
+  self.partial_name = 'assay_plate'
+  self.javascript_partial_name = 'shared_robot_javascript'
+  def self.ordered_beds
+    source_beds + destination_beds
+  end
+  def self.column_groups
+    ordered_beds.map { |b| [b] }
+  end
+  def parse_source_and_destination_barcodes(scanned_values)
+    source_and_destination_barcodes = []
+    source_barcode = scanned_values[source_beds.first.downcase.to_sym][:plate]
+    return [] if source_barcode.blank?
+    destination_beds.each do |destination_bed|
+      destination_barcode = scanned_values[destination_bed.downcase.to_sym][:plate]
+      next if destination_barcode.blank?
+      source_and_destination_barcodes << [source_barcode, destination_barcode]
+    end
+    source_and_destination_barcodes
+  end
+end",ruby
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using namespace std;
+bool DayParser::doParse( const std::string& line, std::vector<std::string >& lineTokens )
+{
+
+
+	if ( lineTokens.size() < 2 ) {
+		throw std::runtime_error( ""DayParser::doParse: Invalid day :"" + line );
+	}
+	if ( nodeStack().empty() ) {
+		throw std::runtime_error(""DayParser::doParse: Could not add day as node stack is empty at line: "" + line );
+	}
+
+ 	nodeStack_top()->addDay( DayAttr::create(lineTokens, rootParser()->get_file_type() != PrintStyle::DEFS));
+	return true;
+}",cpp
+"require 'test_helper'
+class SiteLayoutTest < ActionDispatch::IntegrationTest
+  def setup
+    @user = users(:michael)
+  end
+  test ""layout links"" do
+    get root_path
+    assert_template 'static_pages/home'
+    assert_select ""a[href=?]"", root_path, count: 2
+    assert_select ""a[href=?]"", help_path
+    assert_select ""a[href=?]"", about_path
+    assert_select ""a[href=?]"", contact_path
+    assert_select ""a[href=?]"", login_path
+    assert_select ""a[href=?]"", logout_path, count: 0
+    log_in_as(@user)
+    follow_redirect!
+    assert_select ""a[href=?]"", login_path, count: 0
+    assert_select ""a[href=?]"", logout_path
+    assert_select ""a[href=?]"", user_path(@user)
+    assert_select ""a[href=?]"", users_path
+    get contact_path
+    assert_select ""title"", full_title(""Contact"")
+    get signup_path
+    assert_select ""title"", full_title(""Sign up"")
+  end
+end",ruby
+"var mongoose = require('mongoose')
+const UserSchema = new mongoose.Schema({
+    _id:mongoose.Schema.Types.ObjectId,
+    firstName: {
+        type: String,
+    },
+    lastName: {
+        type: String,
+    },
+    Email: {
+        type: String,
+    },
+    Password: {
+        type: String,
+    },
+    Mobile: {
+        type: String,
+    },
+    Address: {
+        type: String,
+    },
+    accessToken: {
+        type: String,
+    },
+    UsersCreatedDate: { 
+        type : Date, 
+        default: Date.now 
+    }
+})
+const Users = mongoose.model('tbl_users', UserSchema)
+module.exports = Users;",javascript
+"
+
+
+
+
+
+
+
+
+
+VideoWriter :: VideoWriter ( void )
+	{
+
+
+
+
+
+
+	iFps	= 10;
+	iW		= 320;
+	iH		= 240;
+	}	// VideoWriter
+HRESULT VideoWriter :: onAttach ( bool bAttach )
+	{
+
+
+
+
+
+
+
+
+
+
+
+
+	HRESULT	hr = S_OK;
+
+	if (bAttach)
+		{
+		adtValue		vL;
+
+		if (pnDesc->load ( adtString(L""FPS""), vL ) == S_OK)
+			iFps = vL;
+		if (pnDesc->load ( adtString(L""Width""), vL ) == S_OK)
+			iW = vL;
+		if (pnDesc->load ( adtString(L""Height""), vL ) == S_OK)
+			iH = vL;
+		}	// if
+
+	else
+		{
+
+		}	// else
+	return hr;
+	}	// onAttach
+HRESULT VideoWriter :: onReceive ( IReceptor *pr, const ADTVALUE &v )
+	{
+
+
+
+
+
+
+
+
+
+
+
+
+
+	HRESULT	hr = S_OK;
+		hr = ERROR_NO_MATCH;
+	return hr;
+	}	// receive",cpp
+"BEGIN;
+ALTER TABLE users DROP COLUMN password_reset_token;
+ALTER TABLE users DROP COLUMN password_reset_token_expired_at;
+COMMIT;",mysql
+"
+
+namespace polyvec
+{
+	struct EmptyData
+	{ };
+	template <typename EntryData = EmptyData>
+	class UnionFind
+	{
+		struct UFEntry : public EntryData
+		{
+			int parent;			
+		};
+	public:
+		UnionFind(size_t size)
+		{
+			uf.resize(size);
+			for (int i = 0; i < uf.size(); ++i)
+				uf[i].parent = i;
+		}
+		int getRepresentative(int i) 
+		{
+			if (uf[i].parent != i)
+				uf[i].parent = getRepresentative(uf[i].parent);
+			return uf[i].parent;
+		}
+		void merge(int i, int j)
+		{
+			uf[getRepresentative(i)].parent = getRepresentative(j);
+		}
+		size_t size() const { return uf.size(); }
+		UFEntry& operator[](int i) { return uf[i]; }
+		const UFEntry& operator[](int i) const { return uf[i]; }
+	private:
+		std::vector<UFEntry> uf;
+	};
+}",cpp
+"
+from .Enviopack import Enviopack
+from .Auth.Auth import Auth
+from .Quote.Quote import Quote
+from .Pickings.Pickings import Pickings
+from .Orders.Orders import Orders
+__version__ = ""0.4.6""
+__author__ = ""Federico Gobea""",python
+"require ""spree/core""
+module SpreePos
+  class Configuration < Spree::Preferences::Configuration
+      preference :pos_shipping, :string
+      preference :pos_printing, :string , :default => ""/admin/invoice/number/receipt""
+  end
+end",ruby
+"class ItemsController < ApplicationController
+	helper_method :params
+	def index
+		@items = Item.all
+	end
+	def new
+		@item = Item.new 
+	end
+	def create
+		@item = Item.new(item_params)
+		if @item.save
+			redirect_to items_path
+		else
+			render :new
+		end
+	end
+	def edit
+		find_item_id
+	end
+	def update
+		find_item_id
+		@item.update(params.require(:item).permit(:name, :category, :price))
+	  redirect_to items_path
+	end
+	def destroy
+		find_item_id
+		if @item
+			@item.destroy
+			redirect_to items_path
+		end
+	end
+  private
+  	def find_item_id
+  		@item = Item.find(params[:id])
+  	end
+	def item_params
+	  params.require(:item).permit(:name, :category, :price)
+	end
+end",ruby
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+PyObject *pyjournal_runtimeError = 0;
+
+
+",cpp
+"
+struct RenderBatchParam
+{
+    glm::mat4           modelMatrix;
+};
+struct RenderEntityParams
+{
+    glm::vec3           position;
+    glm::mat4           orientation; // and scale
+    RenderModelHandle   model;
+    int                 renderMask{ 0 }; // if 0, it gets rendered everywhere
+
+
+    RenderBatchParam*   batch{ nullptr };
+    uint32_t            batchSize{ 0 };
+};
+",cpp
+"package executionService
+import (
+	""encoding/json""
+	""github.com/dotenx/dotenx/ao-api/models""
+)
+func (manage *executionManager) CheckReturnValues(executionId int, accountId, taskName string) (input map[string]interface{}, err error) {
+	taskId, err := manage.GetTaskId(executionId, taskName)
+	if err != nil {
+		return nil, err
+	}
+	res, err := manage.Store.GetTaskResultDetails(noContext, executionId, taskId)
+	if err != nil {
+		return
+	}
+	type taskRes struct {
+		Status      string                `json:""status""`
+		Log         string                `json:""log""`
+		ReturnValue models.ReturnValueMap `json:""return_value""`
+	}
+	var result taskRes
+	bytes, err := json.Marshal(res)
+	if err != nil {
+		return
+	}
+	json.Unmarshal(bytes, &result)
+	return result.ReturnValue, nil
+}",go
+"package ginx
+import (
+	""context""
+	""fmt""
+	""github.com/gin-gonic/gin""
+)
+var (
+	GinContextKey = ""_GinCtxKey""
+)
+
+func GinContextToHttpContext(c *gin.Context) {
+	ctx := context.WithValue(c.Request.Context(), GinContextKey, c)
+	c.Request = c.Request.WithContext(ctx)
+	c.Next()
+}
+
+func GetGinContext(ctx context.Context) (*gin.Context, error) {
+	ginCtx := ctx.Value(GinContextKey)
+	if ginCtx == nil {
+		err := fmt.Errorf(""could not retrieve gin.Context by %s"", GinContextKey)
+		return nil, err
+	}
+	gc, ok := ginCtx.(*gin.Context)
+	if !ok {
+		err := fmt.Errorf(""gin.Context has wrong type: %T"", ginCtx)
+		return nil, err
+	}
+	return gc, nil
+}
+func MustGetGinContext(ctx context.Context) *gin.Context {
+	gc, err := GetGinContext(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return gc
+}",go
+"
+
+n = ARGV[0]&.to_i || 10
+file_path = File.expand_path('../data/hightemp.txt', __dir__)
+res = File.foreach(file_path).reverse_each.first(n).reverse.join
+raise 'Failed!' if res != `tail -n #{n} #{file_path}`
+puts res",ruby
+"
+
+
+
+
+
+
+
+template <typename ...T, typename F, std::size_t ...i>
+auto transform_impl(std::tuple<T...> const& tuple, F const& f,
+                    std::index_sequence<i...>)
+{
+  return std::make_tuple(f(std::get<i>(tuple))...);
+}
+template <typename ...T, typename F>
+auto transform(std::tuple<T...> const& tuple, F const& f) {
+  return transform_impl(tuple, f,
+            std::make_index_sequence<sizeof...(T)>{});
+}
+
+int main() {
+  std::tuple<int, char, float> ts{1, '2', 3.3f};
+  auto us = transform(ts, [](auto x) {
+    std::ostringstream ss;
+    ss << x;
+    return ss.str();
+  });
+  assert(us == std::make_tuple(""1"", ""2"", ""3.3""));
+}",cpp
+"--  @testpoint:opengauss关键字source(非保留)，作为数据库名
+--关键字不带引号-成功
+drop database if exists source;
+create database source;
+drop database source;
+--关键字带双引号-成功
+drop database if exists ""source"";
+create database ""source"";
+drop database ""source"";
+--关键字带单引号-合理报错
+drop database if exists 'source';
+create database 'source';
+--关键字带反引号-合理报错
+drop database if exists `source`;
+create database `source`;",mysql
+"
+
+
+package zstd
+import ""encoding/binary""
+
+
+
+
+type byteReader struct {
+	b   []byte
+	off int
+}
+
+func (b *byteReader) init(in []byte) {
+	b.b = in
+	b.off = 0
+}
+
+func (b *byteReader) advance(n uint) {
+	b.off += int(n)
+}
+
+func (b *byteReader) overread() bool {
+	return b.off > len(b.b)
+}
+
+func (b byteReader) Int32() int32 {
+	b2 := b.b[b.off : b.off+4 : b.off+4]
+	v3 := int32(b2[3])
+	v2 := int32(b2[2])
+	v1 := int32(b2[1])
+	v0 := int32(b2[0])
+	return v0 | (v1 << 8) | (v2 << 16) | (v3 << 24)
+}
+
+func (b *byteReader) Uint8() uint8 {
+	v := b.b[b.off]
+	return v
+}
+
+func (b byteReader) Uint32() uint32 {
+	if r := b.remain(); r < 4 {
+
+		v := uint32(0)
+		for i := 1; i <= r; i++ {
+			v = (v << 8) | uint32(b.b[len(b.b)-i])
+		}
+		return v
+	}
+	return binary.LittleEndian.Uint32(b.b[b.off : b.off+4])
+}
+
+func (b byteReader) unread() []byte {
+	return b.b[b.off:]
+}
+
+func (b byteReader) remain() int {
+	return len(b.b) - b.off
+}",go
+"-- INICIO - carlos.alberto 27/05/2014
+alter table delegacaocentroresultadoidresponsavelregistro int4  not null;
+alter table delegacaocentroresultadoidresponsavelrevogacao int4 null;
+alter table delegacaocentroresultadodatahoraregistro     timestamp not null;
+alter table delegacaocentroresultado datahorarevogacao    timestamp null;
+alter table delegacaocentroresultado
+   add constraint fk_delegaca_reference_empregad foreign key (idresponsavelregistro)
+      references empregados (idempregado)
+      on delete restrict on update restrict;
+alter table delegacaocentroresultado
+   add constraint fk_delegaca_reference_empregad foreign key (idresponsavelrevogacao)
+      references empregados (idempregado)
+      on delete restrict on update restrict;
+-- FIM - carlos.alberto 27/05/2014",mysql
+"package datatypes
+
+
+type ArtistInfo struct {
+	Artist
+	UpcomingGigCount int `json:""upcoming_events_count""`
+}",go
+"
+defineSuite([
+        'Core/definedNotNull'
+    ], function(
+        definedNotNull) {
+    ""use strict"";
+    it('works', function() {
+        expect(definedNotNull(0)).toEqual(true);
+        expect(definedNotNull(undefined)).toEqual(false);
+        expect(definedNotNull(null)).toEqual(false);
+    });
+});",javascript
+"ALTER TABLE ""public"".""users"" ALTER COLUMN ""username"" DROP NOT NULL;",mysql
+"
+const fs = require(""fs"");
+module.exports.default = () => {
+
+  const featureLocation = ""./features"";
+  const reportLocation = ""./reports"";
+  process.stdout.write(""Creating features folder..."");
+  if (!fs.existsSync(featureLocation)) {
+    fs.mkdirSync(featureLocation);
+    process.stdout.write(""done.\n"");
+  } else {
+    process.stdout.write(""already exists.\n"");
+  }
+
+  process.stdout.write(""Creating initial feature..."");
+  let feature_template =
+    ""@cuebot \nFeature: My Sample Feature\n"" +
+    ""\tAs Automation engineer\n"" +
+    ""\tI want to verify that all functionality are working as they should\n\n"" +
+    ""\t@sample\n"" +
+    ""\tScenario: My Sample Scenario\n"" +
+    ""\t\tGiven my search keyword is 'YouTube'\n"" +
+    ""\t\tWhen I search the keyword on Google\n"" +
+    ""\t\tThen I can see keyword 'YouTube' on search result page\n\n"" +
+    """";
+  fs.writeFileSync(featureLocation + ""/sample.feature"", feature_template);
+  process.stdout.write(""done.\n"");
+};",javascript
+"
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+
+        ListNode* root = head;
+        while(root && head->next){
+            ListNode *p = head->next;
+            head->next = p->next;
+            p->next = root;
+            root = p;
+        }
+        return root;
+    }
+};",cpp
+"
+
+
+
+
+namespace RED4ext
+{
+namespace AI::behavior { 
+struct CreateAlertedInfluenceMapTaskDefinition : AI::behavior::TaskDefinition
+{
+    static constexpr const char* NAME = ""AIbehaviorCreateAlertedInfluenceMapTaskDefinition"";
+    static constexpr const char* ALIAS = NAME;
+};
+RED4EXT_ASSERT_SIZE(CreateAlertedInfluenceMapTaskDefinition, 0x38);
+} // namespace AI::behavior
+} // namespace RED4ext",cpp
+"
+""""""
+    Isilon SDK
+    Isilon SDK - Language bindings for the OneFS API  # noqa: E501
+    OpenAPI spec version: 5
+    Contact: sdk@isilon.com
+    Generated by: https://github.com/swagger-api/swagger-codegen.git
+""""""
+from __future__ import absolute_import
+import unittest
+import isi_sdk_8_1_0
+from isi_sdk_8_1_0.models.license_license_tier_entitlements_exceeded_alert import LicenseLicenseTierEntitlementsExceededAlert  # noqa: E501
+from isi_sdk_8_1_0.rest import ApiException
+class TestLicenseLicenseTierEntitlementsExceededAlert(unittest.TestCase):
+    """"""LicenseLicenseTierEntitlementsExceededAlert unit test stubs""""""
+    def setUp(self):
+        pass
+    def tearDown(self):
+        pass
+    def testLicenseLicenseTierEntitlementsExceededAlert(self):
+        """"""Test LicenseLicenseTierEntitlementsExceededAlert""""""
+
+
+        pass
+if __name__ == '__main__':
+    unittest.main()",python
+"package br.com.cod3r.strategy.worker;
+import br.com.cod3r.strategy.worker.jobs.Developer;
+import br.com.cod3r.strategy.worker.jobs.HispsterDeveloper;
+import br.com.cod3r.strategy.worker.jobs.Pilot;
+import br.com.cod3r.strategy.worker.jobs.Worker;
+public class Client {
+	public static void presentYourself(Worker worker, String name) {
+		System.out.println(""Hi, I'm "" + name);
+		worker.eat();
+		worker.move();
+		worker.work();
+		System.out.println(""----------------"");
+	}
+	public static void main(String[] args) {
+		Worker jhon = new Developer();
+		presentYourself(jhon, ""Jhon"");
+		Worker ann = new Pilot();
+		presentYourself(ann, ""Ann"");
+		Worker carol = new HispsterDeveloper();
+		presentYourself(carol, ""carol"");
+	}
+}",java
+"﻿#include ""chinamapwidgetobjectpoint.h""
+ChinaMapWidgetObjectPoint::ChinaMapWidgetObjectPoint(QObject* parent)
+    : QObject(parent)
+{
+}
+void ChinaMapWidgetObjectPoint::setGeoX(double geoX)
+{
+    m_geoX = geoX;
+}
+void ChinaMapWidgetObjectPoint::setGeoY(double geoY)
+{
+    m_geoY = geoY;
+}
+double ChinaMapWidgetObjectPoint::geoX()
+{
+    return m_geoX;
+}
+double ChinaMapWidgetObjectPoint::geoY()
+{
+    return m_geoY;
+}
+void ChinaMapWidgetObjectPoint::setScreenX(double screenX)
+{
+    m_screenX = screenX;
+}
+void ChinaMapWidgetObjectPoint::setScreenY(double screenY)
+{
+    m_screenY = screenY;
+}
+double ChinaMapWidgetObjectPoint::screenX()
+{
+    return m_screenX;
+}
+double ChinaMapWidgetObjectPoint::screenY()
+{
+    return m_screenY;
+}",cpp
+"package module116packageJava0;
+import java.lang.Integer;
+public class Foo158 {
+  Integer int0;
+  Integer int1;
+  Integer int2;
+  public void foo0() {
+    new module116packageJava0.Foo157().foo18();
+  }
+  public void foo1() {
+    foo0();
+  }
+  public void foo2() {
+    foo1();
+  }
+  public void foo3() {
+    foo2();
+  }
+  public void foo4() {
+    foo3();
+  }
+  public void foo5() {
+    foo4();
+  }
+  public void foo6() {
+    foo5();
+  }
+  public void foo7() {
+    foo6();
+  }
+  public void foo8() {
+    foo7();
+  }
+  public void foo9() {
+    foo8();
+  }
+  public void foo10() {
+    foo9();
+  }
+  public void foo11() {
+    foo10();
+  }
+  public void foo12() {
+    foo11();
+  }
+  public void foo13() {
+    foo12();
+  }
+  public void foo14() {
+    foo13();
+  }
+  public void foo15() {
+    foo14();
+  }
+  public void foo16() {
+    foo15();
+  }
+  public void foo17() {
+    foo16();
+  }
+  public void foo18() {
+    foo17();
+  }
+}",java
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package querycache
+import ""time""
+
+type Option func(c *cache)
+
+func WithExpireTimeout(expireTimeout time.Duration) Option {
+	return func(c *cache) {
+		c.expireTimeout = expireTimeout
+	}
+}",go
+"
+;
+;
+;
+;
+;
+;
+CREATE DATABASE `descargas` ;
+USE `descargas`;
+
+DROP TABLE IF EXISTS `informacion`;
+CREATE TABLE `informacion` (
+  `idPersona` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(25) DEFAULT NULL,
+  `correo` varchar(25) DEFAULT NULL,
+  `telefono` int(25) DEFAULT NULL,
+  `archivo` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`idPersona`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+;
+;
+;
+;",mysql
+"
+package cz.msebera.android.httpclient.impl.conn.tsccm;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
+import cz.msebera.android.httpclient.conn.routing.HttpRoute;
+import cz.msebera.android.httpclient.util.Args;
+
+@Deprecated
+public class BasicPoolEntryRef extends WeakReference<BasicPoolEntry> {
+    
+    private final HttpRoute route; // HttpRoute is @Immutable
+    
+    public BasicPoolEntryRef(final BasicPoolEntry entry,
+                             final ReferenceQueue<Object> queue) {
+        super(entry, queue);
+        Args.notNull(entry, ""Pool entry"");
+        route = entry.getPlannedRoute();
+    }
+    
+    public final HttpRoute getRoute() {
+        return this.route;
+    }
+} // class BasicPoolEntryRef",java
+"
+
+
+
+NS_BEGIN(elloop);
+using namespace std;
+
+RUN_GTEST(ListTest, Example, @);
+auto printList = [](const list<int> &l, const string &info="""") {
+    p(info);
+    for (auto &i : l) {
+        p(i); p("" "");
+    }
+    cr;
+};
+list<int> list1, list2;
+for (int i=0; i<6; ++i) {
+    list1.push_back(i);
+    list2.push_front(i);
+}
+printList(list1, ""after push, list1: "");             
+printList(list2, ""after push, list2: "");            
+
+list2.splice(find(begin(list2), end(list2), 3), list1);
+printList(list1, ""list1, after splice: "");                        // empty
+printList(list2, ""list2, after splice: "");   
+
+list2.splice(end(list2), list2, begin(list2));
+printList(list2, ""list2, move begin to end: "");   
+list2.sort();
+list1 = list2;
+list2.unique();
+printList(list1, ""list1, after assign: "");             
+printList(list2, ""list2, after sort & unique: "");            
+list1.merge(list2);
+printList(list1, ""list1, after merge: "");
+printList(list2, ""list2, after merge: "");
+END_TEST;
+NS_END(elloop);",cpp
+"
+package fede.workspace.tool.view.dialog.create;
+import org.eclipse.swt.graphics.Image;
+import fr.imag.adele.cadse.core.ui.RuningInteractionController;
+public interface InteractifTreeController extends RuningInteractionController {
+	public String getText(Object obj);
+	public Image getImage(Object obj);
+	public Object[] getChildren(Object obj);
+}",java
+"import Link from ""next/link"";
+import { useRouter } from ""next/router"";
+export default function ProjectFeed({ projects }) {
+  return projects
+    ? projects.map((project) => <ProjectItem project={project} />)
+    : null;
+}
+function ProjectItem({ project }) {
+  const router = useRouter();
+  return (
+    <>
+      <h1>{project}</h1>
+      <button
+        type=""button""
+        onClick={() => {
+          router.push({
+            pathname: ""/projects/[id]/tickets"",
+            query: { id: project },
+          });
+        }}
+      >
+        Test{"" ""}
+      </button>
+    </>
+  );
+}",javascript
+"
+
+
+
+package tar
+import (
+	""syscall""
+	""time""
+)
+func statAtime(st *syscall.Stat_t) time.Time {
+	return time.Unix(st.Atimespec.Unix())
+}
+func statCtime(st *syscall.Stat_t) time.Time {
+	return time.Unix(st.Ctimespec.Unix())
+}",go
+"
+
+
+declare module 'tmp' {
+  declare module.exports: any;
+}
+
+declare module 'tmp/lib/tmp' {
+  declare module.exports: any;
+}
+
+declare module 'tmp/lib/tmp.js' {
+  declare module.exports: $Exports<'tmp/lib/tmp'>;
+}",javascript
+"package servergroups
+import ""github.com/huaweicloud/golangsdk""
+const resourcePath = ""os-server-groups""
+func resourceURL(c *golangsdk.ServiceClient) string {
+	return c.ServiceURL(resourcePath)
+}
+func listURL(c *golangsdk.ServiceClient) string {
+	return resourceURL(c)
+}
+func createURL(c *golangsdk.ServiceClient) string {
+	return resourceURL(c)
+}
+func getURL(c *golangsdk.ServiceClient, id string) string {
+	return c.ServiceURL(resourcePath, id)
+}
+func actionURL(c *golangsdk.ServiceClient, id string) string {
+	return c.ServiceURL(""cloudservers"", resourcePath, id, ""action"")
+}
+func deleteURL(c *golangsdk.ServiceClient, id string) string {
+	return getURL(c, id)
+}",go
+"
+
+
+enum {
+    DR_MAX_NUM_BUFFERS = 20,		// Increasing this from 10 b/c RceAdapter couldn't always keep up with just 10 for reads
+};
+",cpp
+"import React from 'react';
+import * as PropTypes from 'prop-types';
+import { Button, Dropdown } from 'antd';
+const ButtonDropdown = ({
+  overlay,
+  ...buttonProps
+}) => <Dropdown overlay={overlay} placement=""bottomLeft"" trigger={['click']}>
+    <Button {...buttonProps} />
+  </Dropdown>;
+ButtonDropdown.propTypes = {
+  overlay: PropTypes.object.isRequired
+};
+export default ButtonDropdown;",javascript
+"
+
+
+
+class AnnouncementSweeper < ActionController::Caching::Sweeper
+  include CachingHelper
+  observe Announcement
+  def after_create(announcement)
+    expire_announcements
+  end
+  def after_destroy(announcement)
+    expire_announcements
+  end
+  def after_update(announcement)
+    expire_announcements
+  end
+  private
+  def expire_announcements
+    expire_fragment(:controller => 'home_cache', :action => 'announcements')
+  end
+end",ruby
+"!function(){function s(i){s.msg=void 0===s.msg?0:s.msg,s.msg<i.length&&(i[s.msg].addEventListener(""animationend"",function(){s(i)}),i[s.msg].classList.contains(""msg-visible"")||(s.msg<i.length-1&&(i[s.msg].classList.contains(""right-msg"")&&i[s.msg+1].classList.contains(""right-msg"")||!i[s.msg].classList.contains(""right-msg"")&&!i[s.msg+1].classList.contains(""right-msg"")&&!i[s.msg+1].classList.contains(""time""))&&i[s.msg].classList.add(""no-tail""),i[s.msg].classList.add(""msg-visible"")),s.msg++)}window.addEventListener(""load"",function(){var i=document.querySelectorAll(""ul.rounded-messages.reveal-messages li"");i.length>0&&s(i)})}();",javascript
+"INSERT INTO [dbo].[Kooboo_CMS_Account_Users]
+           ([Email]
+           ,[UserName]
+           ,[Password]
+           ,[IsAdministrator]
+           ,[UICulture]
+           ,[PasswordSalt]
+           ,[IsApproved]
+           ,[IsLockedOut]
+           ,[FailedPasswordAttemptCount]
+           ,[UtcLastLockoutDate]
+           ,[UtcLastLoginDate]
+           ,[UtcLastPasswordChangedDate]
+           ,[ActivateCode]
+           ,[CustomFieldsXml])
+     VALUES
+           ('admin@kooboo.com'
+           ,'admin'
+           ,'FYOL44w+oWRo53/9NQCnqa8RS00='
+           ,1
+           ,''
+           ,'aKEwnA2Riwo4SCzyYFfzFw=='
+           ,1
+           ,0
+           ,0
+           ,getdate()
+           ,getdate()
+           ,getdate()
+           ,''
+           ,'')",mysql
+"-- 拡張をインストール
+CREATE EXTENSION IF NOT EXISTS postgis;",mysql
+"
+
+
+
+outputs = [ ""out.exr"" ]
+command = testrender(""-r 320 240 -aa 4 material-layer.xml out.exr"")",python
+"
+package net.runelite.client.plugins.cerberus.domain;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+@Getter
+@RequiredArgsConstructor
+public class CerberusAttack
+{
+	private final int tick;
+	private final Cerberus.Attack attack;
+}",java
+"
+class Permit < ApplicationRecord
+  belongs_to :regime, inverse_of: :permits
+  validates :permit_reference, presence: true
+  validates :permit_category, presence: true
+  validates :effective_date, presence: true
+  validates :status, presence: true
+end",ruby
+"class AuditActivity::Correspondence::AddEmail < AuditActivity::Correspondence::Base
+  belongs_to :correspondence, class_name: ""Correspondence::Email""
+  include ActivityAttachable
+  with_attachments email_file: ""email file"", email_attachment: ""email attachment""
+  def subtitle_slug
+    ""Email recorded""
+  end
+  def self.build_metadata(email)
+    {
+      overview: email.overview,
+      subject: email.email_subject,
+      correspondence_date: email.correspondence_date,
+      correspondent_name: email.correspondent_name,
+      correspondent_email: email.email_address,
+      correspondent_direction: Correspondence::Email.email_directions[email.email_direction],
+      email_body: email.details,
+      email_attachment_name: email.email_attachment.filename,
+      email_attachment_description: email.email_attachment.description,
+      email_file_name: email.email_file.filename
+    }
+  end
+  def restricted_title(_user)
+    ""Email added""
+  end
+end",ruby
+"package org.jeecgframework.web.demo.service.test;
+import java.util.List;
+import org.jeecgframework.web.demo.entity.test.JeecgOrderCustomEntity;
+import org.jeecgframework.web.demo.entity.test.JeecgOrderMainEntity;
+import org.jeecgframework.web.demo.entity.test.JeecgOrderProductEntity;
+import org.jeecgframework.core.common.service.CommonService;
+public interface JeecgOrderMainServiceI extends CommonService{
+	
+	public void addMain(JeecgOrderMainEntity jeecgOrderMain,List<JeecgOrderProductEntity> jeecgOrderProducList,List<JeecgOrderCustomEntity> jeecgOrderCustomList) ;
+	
+	public void updateMain(JeecgOrderMainEntity jeecgOrderMain,List<JeecgOrderProductEntity> jeecgOrderProducList,List<JeecgOrderCustomEntity> jeecgOrderCustomList,boolean jeecgOrderCustomShow) ;
+	public void delMain (JeecgOrderMainEntity jeecgOrderMain);
+}",java
+"package com.google.api.ads.adwords.jaxws.v201603.o;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = ""MonthlySearchVolumeAttribute"", propOrder = {
+    ""value""
+})
+public class MonthlySearchVolumeAttribute
+    extends Attribute
+{
+    protected List<MonthlySearchVolume> value;
+    
+    public List<MonthlySearchVolume> getValue() {
+        if (value == null) {
+            value = new ArrayList<MonthlySearchVolume>();
+        }
+        return this.value;
+    }
+}",java
+"package api // import ""github.com/akss1/vksdk/5.92/api""
+import (
+	""github.com/akss1/vksdk/5.92/object""
+)
+
+type StorageGetResponse []object.BaseRequestParam
+
+
+
+
+func (vk *VK) StorageGet(params map[string]string) (response StorageGetResponse, vkErr Error) {
+	_, prs := params[""keys""]
+	if !prs {
+		params[""keys""] = params[""key""]
+	}
+	vk.RequestUnmarshal(""storage.get"", params, &response, &vkErr)
+	return
+}
+
+type StorageGetKeysResponse []string
+
+
+
+func (vk *VK) StorageGetKeys(params map[string]string) (response StorageGetKeysResponse, vkErr Error) {
+	vk.RequestUnmarshal(""storage.getKeys"", params, &response, &vkErr)
+	return
+}
+
+
+
+func (vk *VK) StorageSet(params map[string]string) (response int, vkErr Error) {
+	vk.RequestUnmarshal(""storage.set"", params, &response, &vkErr)
+	return
+}",go
+"import Vector2 from 'phaser/src/math/Vector2'
+export default class UserControlled {
+    constructor(maxSpeed, cursors)
+    {
+        this.maxSpeed = maxSpeed;
+        this.cursors = cursors;
+    }
+    update()
+    {
+        const body = this.character.body;
+        body.setVelocity(0);
+        const speed = this.maxSpeed;
+        const cursors = this.cursors;
+        if (cursors.left.isDown) {
+            body.velocity.x -= speed;
+        } else if (cursors.right.isDown) {
+            body.velocity.x += speed;
+        }
+
+        if (cursors.up.isDown) {
+            body.setVelocityY(-speed);
+        } else if (cursors.down.isDown) {
+            body.setVelocityY(speed);
+        }
+
+        body.velocity.normalize().scale(speed);
+    }
+}",javascript
+"package server
+import (
+	""barf/internal/com/channel""
+	""barf/internal/com/protocol""
+	""barf/internal/com/socket""
+)
+func onMessage(socket *socket.Socket, message *protocol.Message) {
+	if message.RequestCreate != nil {
+		onRequestCreate(socket, message.RequestCreate)
+	} else if message.RequestAbort != nil {
+		onRequestAbort(socket, message.RequestAbort)
+	} else if message.RequestStatus != nil {
+		onRequestStatus(socket, message.RequestStatus)
+	} else if message.RequestList != nil {
+		onRequestList(socket, message.RequestList)
+	}
+}
+func init() {
+	channel.OnMessage(onMessage)
+}",go
+"
+package com.photon.phresco.uiconstants;
+import java.lang.reflect.Field;
+public class PhrescoNodejsUiConstants {
+	private ReadXMLFile readXml;
+	public String ELEMENT = ""stringCapturehelloworldUrl"";
+	public PhrescoNodejsUiConstants() {
+		try {
+		    readXml = new ReadXMLFile();
+		    readXml.NodejsData();
+		    System.out.println(""*********Reading Data from NodejsData**********"");
+			Field[] arrayOfField1 = super.getClass().getFields();
+			Field[] arrayOfField2 = arrayOfField1;
+			int i = arrayOfField2.length;
+			for (int j = 0; j < i; ++j) {
+				Field localField = arrayOfField2[j];
+				Object localObject = localField.get(this);
+				if (localObject instanceof String)
+					localField
+							.set(this, readXml.getValue((String) localObject));
+			}
+		} catch (Exception localException) {
+			throw new RuntimeException(""Loading ""
+					+ super.getClass().getSimpleName() + "" failed"",
+					localException);
+		}
+	}
+}",java
+"
+
+
+
+
+
+
+
+
+
+
+
+
+package aip0234
+import (
+	""github.com/googleapis/api-linter/lint""
+	""github.com/googleapis/api-linter/rules/internal/utils""
+	""github.com/jhump/protoreflect/desc""
+)
+
+var httpUriSuffix = &lint.MethodRule{
+	Name:   lint.NewRuleName(234, ""http-uri-suffix""),
+	OnlyIf: isBatchUpdateMethod,
+	LintMethod: func(m *desc.MethodDescriptor) []lint.Problem {
+		for _, httpRule := range utils.GetHTTPRules(m) {
+			if !batchUpdateURINameRegexp.MatchString(httpRule.URI) {
+				return []lint.Problem{{
+					Message:    `Batch Update methods URI should end with "":batchUpdate"".`,
+					Descriptor: m,
+				}}
+			}
+		}
+		return nil
+	},
+}",go
+"begin
+  require 'diff/lcs'
+rescue LoadError
+  begin
+    require 'rubygems' unless ENV['NO_RUBYGEMS']
+    require 'diff/lcs'
+  rescue LoadError
+    raise ""You must gem install diff-lcs to use diffing""
+  end
+end
+require 'diff/lcs/hunk'",ruby
+"
+
+
+
+
+
+
+
+
+
+
+
+
+package cmd
+import (
+	""log""
+	""github.com/Agenda-Go/entity""
+	""github.com/spf13/cobra""
+)
+
+var deleteUserCmd = &cobra.Command{
+	Use:   ""deleteUser"",
+	Short: ""Delete you account"",
+	Long:  ""Usage：agenda deleteUser"",
+	Run: func(cmd *cobra.Command, args []string) {
+		log.Println(""deleteUser called"")
+		entity.Init()
+		if entity.GetCurrentUser() == """" {
+			log.Println(""Please log in first"")
+		} else {
+			flag1 := entity.DeleteAllMeeting(entity.GetCurrentUser())
+			flag2 := entity.DeleteUser(entity.GetCurrentUser())
+			if flag1 == 0 && flag2 {
+				entity.SetCurrentUser("""")
+				entity.UpdateLib()
+				log.Println(""Delete user "" + entity.GetCurrentUser() + "" successfully"")
+			} else {
+				log.Println(""Delete user "" + entity.GetCurrentUser() + "" failed"")
+			}
+		}
+	},
+}
+func init() {
+	rootCmd.AddCommand(deleteUserCmd)
+}",go
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import unittest
+import MuPythonLibrary.Uefi.EdkII.VariableFormat as VF
+class TestVariableHeader(unittest.TestCase):
+    def test_set_name(self):
+        var = VF.VariableHeader()
+        test_name = ""MyNewName""
+        var.set_name(test_name)
+        self.assertEqual(var.Name, test_name)
+    def test_get_packed_name(self):
+        var = VF.VariableHeader()
+        test_name = ""MyNewName""
+        var.set_name(test_name)
+        test_name_packed = bytes.fromhex('4D0079004E00650077004E0061006D0065000000')
+        self.assertEqual(var.get_packed_name(), test_name_packed)
+if __name__ == '__main__':
+    unittest.main()",python
+"
+
+
+
+
+
+
+package com.agung.produk.config;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter{
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry){
+        registry.addViewController(""/produk/listproduk"").setViewName(""/produk/listproduk"");
+        registry.addViewController(""/halo/halo"").setViewName(""/halo/halo"");
+
+    }
+}",java
+"from setuptools import setup
+from torch.utils.cpp_extension import BuildExtension, CUDAExtension
+setup(
+    name='carafe_layer_cuda',
+    ext_modules=[
+        CUDAExtension('carafe_layer_cuda', [
+            'src/carafe_layer_cuda.cpp',
+            'src/carafe_layer_kernel.cu',
+        ])
+    ],
+    cmdclass={
+        'build_ext': BuildExtension
+    })",python
+"from PIL import Image
+images = []
+for i in range(9):
+    images.append(Image.open(f""../examples/lf/results/render_0{i}_{i}.0.png""))
+images[0].save(""../examples/lf/out.gif"", save_all=True, append_images=images[1:], duration=100, loop=0)",python
+"-- +goose Up
+-- +goose StatementBegin
+CREATE EXTENSION IF NOT EXISTS ""uuid-ossp"";
+CREATE EXTENSION IF NOT EXISTS ""pgcrypto"";
+CREATE TABLE IF NOT EXISTS ""users""
+(
+    id         UUID                 DEFAULT uuid_generate_v4() NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    name       TEXT        NOT NULL UNIQUE,
+    password   TEXT        NOT NULL,
+    is_admin   BOOLEAN     NOT NULL DEFAULT false,
+    PRIMARY KEY (id)
+);
+-- +goose StatementEnd
+-- +goose Down
+-- +goose StatementBegin
+DROP TABLE IF EXISTS ""users"";
+-- +goose StatementEnd",mysql
+"
+public class Ex03_1
+{
+    public static void main(String[] args)
+    {
+        int x = 1;
+        System.out.println(""x: "" + x);
+        for (int i = 1; i <= 3; i++)
+        {
+            System.out.println(""x: "" + x++ + "" "");
+        }
+        System.out.println(""\nx: "" + x);
+    }
+}",java
+"
+import React from 'react'
+import ReactDOM from 'react-dom'
+import DefaultParameters from './DefaultParameters'
+describe('default parameters', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('div')
+    return new Promise(resolve => {
+      ReactDOM.render(<DefaultParameters onReady={resolve} />, div)
+    })
+  })
+})",javascript
+"require ""active_support/core_ext/integer/time""
+
+
+
+
+Rails.application.configure do
+
+  config.cache_classes = false
+  config.action_view.cache_template_loading = true
+
+
+
+  config.eager_load = ENV[""CI""].present?
+
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    ""Cache-Control"" => ""public, max-age=#{1.hour.to_i}"",
+  }
+
+  config.consider_all_requests_local       = true
+  config.action_controller.perform_caching = false
+  config.cache_store = :null_store
+
+  config.action_dispatch.show_exceptions = false
+
+  config.action_controller.allow_forgery_protection = false
+
+  config.active_support.deprecation = :stderr
+
+  config.active_support.disallowed_deprecation = :raise
+
+  config.active_support.disallowed_deprecation_warnings = []
+
+
+  config.active_job.queue_adapter = :inline
+
+
+end",ruby
+"﻿#pragma once
+
+namespace krakoa
+{
+	template<typename  T>
+	using Multi_Ptr = std::shared_ptr<T>;
+	template<typename  T>
+	using Weak_Ptr = std::weak_ptr<T>;
+	template<typename  T>
+	using Solo_Ptr = std::unique_ptr<T>;
+	template<typename T, typename ...Ts,
+		class = std::enable_if_t<std::is_constructible_v<T, Ts...>>>
+		Solo_Ptr<T> Make_Solo(Ts&& ...params)
+	{
+		return std::make_unique<T>(std::forward<Ts>(params)...);
+	}
+	template<typename T, typename ...Ts,
+		class = std::enable_if_t<std::is_constructible_v<T, Ts...>>>
+		Multi_Ptr<T> Make_Multi(Ts&& ...params)
+	{
+		return std::make_shared<T>(std::forward<Ts>(params)...);
+	}
+}",cpp
+"
+
+
+INSERT IGNORE INTO {$NAMESPACE}_project.edge (src, type, dst, dateCreated)
+  SELECT src, 21, dst, dateCreated FROM {$NAMESPACE}_project.edge
+    WHERE type = 13;",mysql
+"import { put, takeEvery } from 'redux-saga/effects'
+import store from 'react-native-simple-store'
+import { AppInstalledChecker } from 'react-native-check-app-install'
+import { Creators, Types } from '../actions/sendAction'
+export function * initData () {
+  const selectedCountryIndex = yield store.get('sendSelectedCountryIndex')
+  if (selectedCountryIndex !== null) {
+    yield put(Creators.updateSelectedCountryIndex(selectedCountryIndex))
+  }
+  const whatsAppInstalled = yield AppInstalledChecker.checkURLScheme('whatsapp')
+  yield put(Creators.updateWhatsappInstalled(whatsAppInstalled))
+}
+export function * onUpdateSelectedCountryIndex ({ selectedCountryIndex }) {
+  try {
+    yield store.save('sendSelectedCountryIndex', selectedCountryIndex)
+  } catch (e) {
+    console.error(e)
+  }
+}
+function * sendSaga () {
+  yield takeEvery(Types.INIT_DATA, initData)
+  yield takeEvery(Types.UPDATE_SELECTED_COUNTRY_INDEX, onUpdateSelectedCountryIndex)
+}
+export default sendSaga",javascript
+"
+
+package com.google.ads.googleads.v2.errors;
+public interface NotEmptyErrorEnumOrBuilder extends
+
+    com.google.protobuf.MessageOrBuilder {
+}",java
+"
+
+
+
+
+
+
+Pod::Spec.new do |s|
+  s.name             = 'SmartGauge'
+  s.version          = '0.6.6'
+  s.summary          = 'Gauge for iOS'
+
+
+
+
+
+  s.description      = <<-DESC
+SmartGauge: Customizable iOS Gauge.
+                       DESC
+  s.homepage         = 'https://github.com/rameezhandel/SmartGauge'
+
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.author           = { 'rameezibrahim' => 'rameezibrahim' }
+  s.source           = { :git => 'https://github.com/rameezhandel/SmartGauge.git', :tag => s.version.to_s }
+
+  s.ios.deployment_target = '8.0'
+  s.swift_version = '5.0'
+  s.source_files = 'SmartGauge/Classes*'
+
+
+
+
+
+
+end",ruby
+"
+
+
+
+
+
+CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nSize)
+{
+    if (nSize > 0)
+        nSatoshisPerK = nFeePaid * 1000 / nSize;
+    else
+        nSatoshisPerK = 0;
+}
+CAmount CFeeRate::GetFee(size_t nSize) const
+{
+    CAmount nFee = nSatoshisPerK * nSize / 1000;
+    if (nFee == 0 && nSatoshisPerK > 0)
+        nFee = nSatoshisPerK;
+    return nFee;
+}
+std::string CFeeRate::ToString() const
+{
+    return strprintf(""%d.%08d VN/kB"", nSatoshisPerK / COIN, nSatoshisPerK % COIN);
+}",cpp
+"var click = ""click"";
+var keydown = ""keydown"";
+var keypress = ""keypress"";
+var keyup = ""keyup"";
+var change = ""change"";
+var MODELFLAG_PICKED = 1 << 1;
+var MODELFLAG_HIDDEN = 1 << 2;
+var MODELFLAG_LOCKED = 1 << 3;
+var MODELFLAG_FORCE_UPDATE = 1 << 4;
+function ArrayPushIfNotHas(arr, element) {
+    if (arr && element && arr.indexOf(element) == -1) {
+        arr.push(element);
+        return true;
+    } else return false;
+}
+function getParameterByName(name) {
+    if (!location || !location.search) return undefined;
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, """"])[1].replace(/\+/g, '%20')) || null;
+}
+",javascript
+"var dir_043145f9a5fd54162f2b19a696c623ac =
+[
+    [ ""cBoolValueGenerator.cpp"", ""a00186_source.html"", null ],
+    [ ""cBoolValueGenerator.h"", ""a00187_source.html"", null ],
+    [ ""displaywidget.cpp"", ""a00168_source.html"", null ],
+    [ ""displaywidget.h"", ""a00173_source.html"", null ],
+    [ ""stdafx.cpp"", ""a00109_source.html"", null ],
+    [ ""stdafx.h"", ""a00127_source.html"", null ]
+];",javascript
+"
+from django.db import migrations, models
+class Migration(migrations.Migration):
+    dependencies = [
+        ('exam', '0006_exam_duration'),
+    ]
+    operations = [
+        migrations.AlterField(
+            model_name='exam',
+            name='duration',
+            field=models.CharField(default=0, max_length=4, verbose_name='Durasi Ujian'),
+        ),
+    ]",python
+"
+""""""
+Created on Wed May 20 11:36:58 2020
+@author: nastavirs
+""""""
+import numpy as np
+import tensorflow as tf
+def net_u(self, x, t):  
+        u = self.neural_net(tf.concat([x,t],1), self.weights, self.biases)
+        return u",python
+"export const footerBarList = [
+    {title: '首页', icon: 'home'},
+    {title: '视频', icon: 'video'},
+    {title: '微头条', icon: 'comment'},
+    {title: '未登录', icon: 'account'}
+]
+export const newsList = [
+    {title: '推荐', id: 1},
+    {title: '视频', id: 2},
+    {title: '热点', id: 3},
+    {title: '社会', id: 4},
+    {title: '娱乐', id: 5},
+    {title: '军事', id: 6},
+    {title: '科技', id: 7},
+    {title: '汽车', id: 8},
+    {title: '体育', id: 9},
+    {title: '财经', id: 10},
+    {title: '国际', id: 11},
+    {title: '时尚', id: 12},
+    {title: '游戏', id: 13},
+    {title: '旅游', id: 14},
+    {title: '历史', id: 15},
+    {title: '探索', id: 16},
+    {title: '美食', id: 17},
+    {title: '育儿', id: 18},
+    {title: '养生', id: 19},
+    {title: '故事', id: 20},
+    {title: '美文', id: 21}
+]",javascript
+"cask 'metasequoia' do
+  version '4.6.7'
+  sha256 'ce9f936fa75804b279654179aedccef86ac511a2ec72608f143fea209f471742'
+
+  url ""http://metaseq2.sakura.ne.jp/metaseq/Metasequoia-#{version}-Installer.dmg""
+  appcast 'http://www.metaseq.net/en/release_note.html'
+  name 'Metasequoia'
+  homepage 'http://www.metaseq.net/'
+  pkg ""Metasequoia-#{version}-Installer.pkg""
+  uninstall pkgutil: 'com.tetraface.Metasequoia.pkg'
+end",ruby
+"
+package org.apache.logging.log4j.plugins.convert;
+
+public class HexConverter {
+    public static byte[] parseHexBinary(final String s) {
+        final int len = s.length();
+        final byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+}",java
+"T = float(input(""Entre com a temperatura que está agora: ""))
+if T >= 26.0 and T <= 36.0:
+	print(""A temperatura está boa"")
+elif T > 36.0:	
+	print(""A temperatura está quente\n Tome bastante líquido"")
+elif T >= 15.0 and T < 26.0:
+	print(""A temperatura está agradável"")
+else:
+	print(""A temperatura esta fria"")",python
+"
+using namespace PythonCoreNative::RunTime::Parser::AST;
+using namespace PythonCoreNative::RunTime::Parser;
+AssertStatementNode::AssertStatementNode(  
+                            unsigned int start, unsigned int end, 
+                            std::shared_ptr<Token> op1,
+                            std::shared_ptr<ExpressionNode> left,
+                            std::shared_ptr<Token> op2,
+                            std::shared_ptr<ExpressionNode> right
+                        ) : StatementNode(start, end)
+{
+    mOp1 = op1;
+    mLeft = left;
+    mOp2 = op2;
+    mRight = right;
+}
+std::shared_ptr<Token> AssertStatementNode::GetOperator1()
+{
+    return mOp1;
+}
+std::shared_ptr<ExpressionNode> AssertStatementNode::GetLeft()
+{
+    return mLeft;
+}
+std::shared_ptr<Token> AssertStatementNode::GetOperator2()
+{
+    return mOp2;
+}
+std::shared_ptr<ExpressionNode> AssertStatementNode::GetRight()
+{
+    return mRight;
+}",cpp
+"
+
+
+using namespace cppurses;
+int main() {
+    System sys;
+    demos::Main_menu demo_menu;
+    Focus::set_focus_to(&demo_menu.main_menu.menu());
+    return sys.run(demo_menu);
+}",cpp
+"select id,nombre,fecha_nacimiento,nombre_contacto,telefono,tipo
+from mascota
+where id = :id",mysql
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Voxel
+{
+public:
+	Voxel(){}
+	Voxel(glm::vec3 position, glm::vec3 scale, glm::vec3 color);
+	void SetPosition(glm::vec3 position);
+	void SetScale(glm::vec3 scale);
+	void SetIdentity();
+	void SetColor(glm::vec3 color);
+	void Plot(glm::vec3 position, glm::vec3 scale);
+	static void RenderVoxel();
+	auto GetModelMatrix() const -> mat4 const;
+	auto GetColor() const -> vec3 const;
+	static GLuint mVAO, mVertexBuffer, mNormalBuffer, mElementBuffer;
+	static std::vector<GLfloat> voxelData;
+	static std::vector<GLfloat> voxelDataNormal;
+	static std::vector<unsigned int> voxelIndices;
+	static void BuildVoxelData();
+private:
+	mat4 mModelMatrix;
+	vec3 mColor;
+
+
+};",cpp
+"from django.views.generic import TemplateView
+class HomePageView(TemplateView):
+    template_name = ""home.html""",python
+"
+import sys
+si = sys.stdin.readline
+t = [0] * 17
+dp = [0] * 17
+n = int(si())
+for i in range(1, n + 1):
+    m, o = map(int, si().split())
+    t[i] = m
+    dp[i] = o
+def solve(n):
+    ans = 0
+    for i in range(n, 0, -1):
+        if i + t[i] > n + 1:
+            dp[i] = dp[i + 1]
+        else:
+            dp[i] = max(dp[i + 1], dp[i] + dp[i + t[i]])
+            ans = max(ans, dp[i])
+    return ans
+print(solve(n))",python
+"﻿
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date, ,>
+-- Description:	<Description, ,>
+-- =============================================
+CREATE FUNCTION [rep].[GetNameMonth]
+(
+	@Month_Num int -- заданный номер месяца
+)
+RETURNS nvarchar(256)
+AS
+
+BEGIN
+	declare @Month_Name nvarchar(256);
+	set @Month_Name=case @Month_Num
+					when 1 then 'январь'
+					when 2 then 'февраль'
+					when 3 then 'март'
+					when 4 then 'апрель'
+					when 5 then 'май'
+					when 6 then 'июнь'
+					when 7 then 'июль'
+					when 8 then 'август'
+					when 9 then 'сентябрь'
+					when 10 then 'октябрь'
+					when 11 then 'ноябрь'
+					when 12 then 'декабрь'
+					end
+	return @Month_Name;
+END
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'Возвращает русское название месяца по заданному его номеру', @level0type = N'SCHEMA', @level0name = N'rep', @level1type = N'FUNCTION', @level1name = N'GetNameMonth';",mysql
+"
+
+TEST(Print, InFileStream)
+{
+  std::string filepath = ""file.txt"";
+  std::string text = ""hello"";
+  std::ofstream out{filepath};
+  print(text, out);
+  out.close();
+  std::string result;
+  std::ifstream in{filepath};
+  in >> result;
+  EXPECT_EQ(result, text);
+}",cpp
+"package main
+import (
+	""github.com/aws/aws-lambda-go/lambda""
+	""github.com/mathantunes/go-sam-template/domain""
+	""github.com/mathantunes/go-sam-template/domain/entities""
+	""github.com/mathantunes/go-sam-template/domain/service""
+	""github.com/mathantunes/go-sam-template/domain/valueobjects""
+	""github.com/mathantunes/go-sam-template/infra/repo""
+)
+type h struct {
+	svc domain.ServiceInterface
+}
+func (h *h) handle(msg valueobjects.Request) (entities.Data, error) {
+	return h.svc.ProcessRequest(msg)
+}
+func main() {
+	h := &h{
+		svc: service.NewService(repo.NewRepoClient()),
+	}
+	lambda.Start(h.handle)
+}",go
+"import React from 'react'
+import Layout from '../components/layout'
+const Datenschutz = () => {
+    return (
+        <Layout>
+            <h1>Datenschutz</h1>
+        </Layout>
+    )
+}
+export default Datenschutz",javascript
+"CREATE EXTENSION IF NOT EXISTS ""uuid-ossp""; -- required for using UUIDs
+CREATE EXTENSION IF NOT EXISTS ""pgcrypto"";  -- required for encrypting and evaluating passwords",mysql
+"require_relative ""player""
+module StudioGame
+  class BerserkPlayer < Player
+    def initialize(name, health=100)
+      super(name, health)
+      @w00t_count = 0
+    end
+    def berserk?
+      @w00t_count > 5
+    end
+    def w00t
+      super
+      @w00t_count += 1
+      puts ""#{@name} is berserk!"" if berserk?
+    end
+    def blam
+      berserk? ? w00t : super
+    end
+  end
+end
+if __FILE__ == $0
+  berserker = StudioGame::BerserkPlayer.new(""berserker"", 50)
+  6.times { berserker.w00t }
+  2.times { berserker.blam }
+  puts berserker.health
+end",ruby
+"package com.example.seatapplication;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+@SpringBootTest
+class SeatApplicationTests {
+    @Test
+    void contextLoads() {
+    }
+}",java
+"""""""
+Created Oct 19, 2017
+@author: Spencer Vatrt-Watts (github.com/Spenca)
+""""""
+from __future__ import unicode_literals
+from django.apps import AppConfig
+class TenxConfig(AppConfig):
+    name = 'tenx'",python
+"
+package com.google.android.apps.mytracks.maps;
+import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Polyline;
+import java.util.ArrayList;
+import java.util.List;
+
+public interface TrackPath {
+  
+  boolean updateState(TripStatistics tripStatistics);
+  
+  void updatePath(GoogleMap googleMap, ArrayList<Polyline> paths, int startIndex,
+                  List<CachedLocation> points);
+}",java
+"from enum import Enum
+class Color(Enum):
+    red = 1
+    green = 2
+    blue = 3
+print(Color.red.name, Color.red.name.upper())
+print(Color.red.name.<warning descr=""Unresolved attribute reference 'foo' for class 'str'"">foo</warning>)
+print(Color.red.value.<warning descr=""Unresolved attribute reference 'foo' for class 'int'"">foo</warning>)
+print(Color.red.<warning descr=""Unresolved attribute reference 'foo' for class 'Color'"">foo</warning>)
+print(Color.__members__.items())
+print(Color.__members__.<warning descr=""Unresolved attribute reference 'foo' for class 'dict'"">foo</warning>)",python
+"
+package org.apache.servicecomb.demo.pojo.client;
+public interface SchemeInterfacePojo {
+  int reduce(int a, int b);
+  int add(int a, int b);
+}",java
+"var searchData=
+[
+  ['get_5fhistory_22',['get_history',['../classrth_1_1virtual__building_1_1ants_1_1_ant.html#a614b78a20c7ddf3be78ce1251f601e14',1,'rth::virtual_building::ants::Ant']]],
+  ['get_5fip_5fof_5frouter_5fon_5fsubnetwork_23',['get_ip_of_router_on_subnetwork',['../classrth_1_1virtual__building_1_1network__creator_1_1_network_creator.html#a5eef860ccc2ed24f64c62209216fe8a7',1,'rth::virtual_building::network_creator::NetworkCreator']]],
+  ['get_5frouting_5ftable_24',['get_routing_table',['../classrth_1_1virtual__building_1_1routing__tables__generator_1_1_routing_tables_generator.html#a67069fda0797999b7a8f4259aab43a62',1,'rth::virtual_building::routing_tables_generator::RoutingTablesGenerator']]]
+];",javascript
+"SELECT track_id, track_name, track_details, track_band_id, track_tempo, track_duration, track_link, track_release_date,
+    band.band_name AS trackBandName
+    FROM track LEFT JOIN band ON track.track_band_id = band.band_id
+    WHERE track_band_id = :bandId",mysql
+"
+from fugue.extensions.creator.creator import Creator
+from fugue.extensions.creator.convert import creator, _to_creator",python
+"package com.yahtzee.core;
+public class Globals {
+    public static final int MAX_PLAYERS = 3;
+    public static final int MAX_ROLLS = 3;
+    public static final int MAX_ROUNDS = 13;
+    public static final int UPPER_SECTION_BONUS_SCORE = 35;
+    public static final int FULL_HOUSE_SCORE = 25;
+    public static final int SMALL_STRAIGHT_SCORE = 30;
+    public static final int LARGE_STRAIGHT_SCORE = 40;
+    public static final int YAHTZEE_SCORE = 50;
+    public static final int YAHTZEE_BONUS_SCORE = 100;
+}",java
+"
+package com.puttysoftware.loopchute.objects;
+import com.puttysoftware.loopchute.generic.ColorConstants;
+import com.puttysoftware.loopchute.generic.GenericCheckKey;
+public class RedCrystal extends GenericCheckKey {
+
+    public RedCrystal() {
+        super(ColorConstants.COLOR_RED);
+    }
+
+    @Override
+    public String getName() {
+        return ""Red Crystal"";
+    }
+    @Override
+    public String getPluralName() {
+        return ""Red Crystals"";
+    }
+    @Override
+    public String getDescription() {
+        return ""Red Crystals will open Red Crystal Walls."";
+    }
+    @Override
+    public String getBaseName() {
+        return ""Crystal"";
+    }
+}",java
+"import javax.script.ScriptEngineManager;
+import javax.script.ScriptEngine;
+public class Main {
+	public static void main(String[] args) throws Exception {
+		ScriptEngineManager mgr = new ScriptEngineManager();
+		ScriptEngine engine = mgr.getEngineByName(""JavaScript"");
+		String foo = ""3+4"";
+		System.out.println(engine.eval(foo));
+	}
+}",java
+"package logic
+import (
+	""github.com/qsock/qf/service/qgrpc""
+	""github.com/qsock/qim/server/ws_server/config""
+)
+const (
+	CreatedOn = ""created_on""
+)
+func GetRegistKey() string {
+	return qgrpc.GetRegisterKey(config.GetOp().ServerName)
+}",go
+"""use strict"";
+Object.defineProperty(exports, ""__esModule"", {
+  value: true
+});
+exports.ic_autorenew = void 0;
+var ic_autorenew = {
+  ""viewBox"": ""0 0 24 24"",
+  ""children"": [{
+    ""name"": ""path"",
+    ""attribs"": {
+      ""d"": ""M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z""
+    }
+  }]
+};
+exports.ic_autorenew = ic_autorenew;",javascript
+"DROP TABLE IF EXISTS `comment`;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `entity_type` int(11) DEFAULT NULL,
+  `entity_id` int(11) DEFAULT NULL,
+  `target_id` int(11) DEFAULT NULL,
+  `content` text,
+  `status` int(11) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_user_id` (`user_id`),
+  KEY `index_entity_id` (`entity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;",mysql
+"Rails.application.routes.draw do
+  resources :attendees
+  resources :study_sessions
+  resources :admin
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
+
+  root 'welcome#index'
+  resources :users, only: [:show] do
+    resources :study_sessions, only: [:show, :index]
+    resources :attendees, only: [:index, :show]
+  end
+
+end",ruby
+"-- Deploy cd_changeset_status
+BEGIN;
+CREATE TYPE cd_changeset_status AS ENUM('open',
+                                        'closed');
+COMMIT;",mysql
+"
+module Crm
+  module Helpers
+    module Validators
+      class CrmTextValidator < CrmEachValidator
+        def validate_each(record, attribute, _)
+          definition = crm_attribute_definition(record, attribute)
+          return if definition['max_length'].blank?
+          record.validates_length_of attribute,
+                                     maximum: definition['max_length']
+        end
+      end
+    end
+  end
+end",ruby
+"﻿
+
+
+
+void CNative::Clear()
+{
+	this->_GetMemory()->_SetRawLength(0);
+}",cpp
+"def decoupling_regularization_prepare(graph, sigma_square,lambda_input):
+
+
+    A = np.array(nx.adjacency_matrix(graph).todense()) 
+    d = np.sum(A, axis=1)
+    D = np.diag(d)
+    n = len(D)
+
+    Sigma_square = np.divide(sigma_square,d)
+    Sigma = np.diag(Sigma_square)
+    W = np.dot(A,inv(Sigma))
+    lambda_diag = lambda_input*np.ones(n)
+    lambda_diag_matrix = np.diag(lambda_diag)
+    W = W+lambda_diag_matrix
+    w_col_sum = np.sum(W, axis=0)
+    w_row_sum = np.sum(W, axis=1)
+    Z_prime = np.diag(w_col_sum)
+    Z = np.diag(w_row_sum)
+    A_tilde = np.dot(np.dot(W,inv(Z_prime)),np.transpose(W))
+
+    return (A_tilde)",python
+"create table if not exists migrations (
+  version text primary key,
+  created_at timestamp not null default CURRENT_TIMESTAMP
+);",mysql
+"package com.sunil.expandablerecyclerview;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() throws Exception {
+        assertEquals(4, 2 + 2);
+    }
+}",java
+"
+
+
+
+
+
+
+
+
+
+
+
+require 'test_helper'
+require 'rails/performance_test_help'
+
+class BrowsingTest < ActionDispatch::PerformanceTest
+  def test_homepage
+    get '/'
+  end
+end",ruby
+"
+
+class ChangeCarryingBillFromGoodsErrors < ActiveRecord::Migration
+  def self.up
+    change_column :goods_errors,:carrying_bill_id,:integer,:null => true
+  end
+  def self.down
+    change_column :goods_errors,:carrying_bill_id,:integer,:null => false
+  end
+end",ruby
+"----------------------------
+-- Copyright (C) 2022 CARTO
+----------------------------
+CREATE OR REPLACE FUNCTION @@RS_PREFIX@@carto.__QUADBIN_FROMQUADINT
+(quadint BIGINT)
+RETURNS BIGINT
+STABLE
+AS $$
+    from @@RS_PREFIX@@quadbinLib import quadbin_from_zxy
+    z = quadint & 31
+    x = (quadint >> 5) & ((1 << z) - 1)
+    y = quadint >> (z + 5)
+    return quadbin_from_zxy(z, x, y)
+$$ LANGUAGE plpythonu;",mysql
+"require 'test_helper'
+class DynamicPaperclipTest < ActiveSupport::TestCase
+  test ""truth"" do
+    assert_kind_of Module, DynamicPaperclip
+  end
+end",ruby
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from aliyunsdkcore.request import RpcRequest
+from aliyunsdkcdn.endpoint import endpoint_data
+class DescribeCdnDeletedDomainsRequest(RpcRequest):
+	def __init__(self):
+		RpcRequest.__init__(self, 'Cdn', '2018-05-10', 'DescribeCdnDeletedDomains')
+		self.set_method('POST')
+		if hasattr(self, ""endpoint_map""):
+			setattr(self, ""endpoint_map"", endpoint_data.getEndpointMap())
+		if hasattr(self, ""endpoint_regional""):
+			setattr(self, ""endpoint_regional"", endpoint_data.getEndpointRegional())
+	def get_PageNumber(self):
+		return self.get_query_params().get('PageNumber')
+	def set_PageNumber(self,PageNumber):
+		self.add_query_param('PageNumber',PageNumber)
+	def get_PageSize(self):
+		return self.get_query_params().get('PageSize')
+	def set_PageSize(self,PageSize):
+		self.add_query_param('PageSize',PageSize)
+	def get_OwnerId(self):
+		return self.get_query_params().get('OwnerId')
+	def set_OwnerId(self,OwnerId):
+		self.add_query_param('OwnerId',OwnerId)",python
+"$(document).ready(function(){
+	$(window).scroll(function(){
+		var windowWidth = $(window).width();
+		if (windowWidth > 800){
+			var scroll = $(window).scrollTop();
+			$('header .textos').css({
+				transform: 'translate(0px, '+scroll/2+'%)'
+			});
+			$('main .acerca-de article').css({
+				transform: 'translate(0px, -'+ scroll/4 +'%)'
+			});
+		}
+	});
+	$(window).resize(function(){
+		var windowWidth = $(window).width();
+		if (windowWidth < 800){
+			$('main .acerca-de article').css({
+				transform: 'translate(0px, 0px)'
+			});
+		}
+	})
+});",javascript
+"
+
+
+import re
+data = {}
+file1 = open('size.txt', 'r')
+while True:
+    line = file1.readline()
+
+    if not line:
+        break
+    matches = re.search(""(\w*) (\w*) (\w*) ([^_:<(]*)(?:[_:<(]*)([^_:<(]*)"", line)
+    size = int(matches[2], 16)
+    namespace = matches[4]
+    if ' ' in namespace:
+        namespace = namespace.split(' ')[1]
+    namespace = namespace.replace('\n', '')
+    if namespace not in data:
+        data[namespace] = size
+    else:
+        data[namespace] += size
+file1.close()
+data = dict(sorted(data.items(), key=lambda item: item[1]))
+for key in data:
+    size = data[key]
+    if size < 1024: continue
+    size = round( size / 1024 )
+    print(key + "" "" + str(size) + ""kb"")",python
+"prompt --application/set_environment
+set define off verify off feedback off
+whenever sqlerror exit sql.sqlcode rollback
+--------------------------------------------------------------------------------
+--
+-- ORACLE Application Express (APEX) export file
+--
+-- You should run the script connected to SQL*Plus as the Oracle user
+-- APEX_210100 or as the owner (parsing schema) of the application.
+--
+-- NOTE: Calls to apex_application_install override the defaults below.
+--
+--------------------------------------------------------------------------------
+begin
+wwv_flow_api.import_begin (
+ p_version_yyyy_mm_dd=>'2021.04.15'
+,p_release=>'21.1.2'
+,p_default_workspace_id=>32532315908301997117
+,p_default_application_id=>105814
+,p_default_id_offset=>0
+,p_default_owner=>'WKSP_PERSONALWEBSITE'
+);
+end;
+/",mysql
+"module.exports = {
+  name: 'lmbase-collection',
+  preset: '../../jest.config.js',
+  coverageDirectory: '../../coverage/libs/lmbase-collection',
+  snapshotSerializers: [
+    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
+    'jest-preset-angular/build/AngularSnapshotSerializer.js',
+    'jest-preset-angular/build/HTMLCommentSerializer.js',
+  ],
+};",javascript
+"﻿#include ""App.xaml.h""
+
+using namespace cocos2d;
+App::App()
+{
+	InitializeComponent();
+}
+void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e)
+{
+	if (mPage == nullptr)
+	{
+		mPage = ref new OpenGLESPage(&mOpenGLES);
+	}
+
+	Windows::UI::Xaml::Window::Current->Content = mPage;
+	Windows::UI::Xaml::Window::Current->Activate();
+}",cpp
+"package com.iteaj.util;
+
+public class ApiException extends RuntimeException {
+    private IErrorCode code;
+    public ApiException(IErrorCode code) {
+        this.code = code;
+    }
+    public ApiException(Throwable cause, IErrorCode code) {
+        super(cause);
+        this.code = code;
+    }
+    public IErrorCode getCode() {
+        return code;
+    }
+}",java
+"CREATE TABLE subdivision_NO (id VARCHAR(6) NOT NULL, name VARCHAR(255), level VARCHAR(64) NOT NULL, PRIMARY KEY(id));
+INSERT INTO ""subdivision_NO"" (""id"", ""name"", ""level"") VALUES ('NO-02', 'Akershus', 'county');
+INSERT INTO ""subdivision_NO"" (""id"", ""name"", ""level"") VALUES ('NO-20', 'Finnmark', 'county');
+INSERT INTO ""subdivision_NO"" (""id"", ""name"", ""level"") VALUES ('NO-22', 'Jan Mayen', '');
+INSERT INTO ""subdivision_NO"" (""id"", ""name"", ""level"") VALUES ('NO-18', 'Nordland', 'county');
+INSERT INTO ""subdivision_NO"" (""id"", ""name"", ""level"") VALUES ('NO-03', 'Oslo', 'county');
+INSERT INTO ""subdivision_NO"" (""id"", ""name"", ""level"") VALUES ('NO-21', 'Svalbard', '');",mysql
+"import React from ""react"";
+import { Route, Switch, useRouteMatch } from ""react-router-dom"";
+import DetailUser from ""./pages/detailUser"";
+import MainUser from ""./pages/mainUser"";
+function UserPage() {
+  const match = useRouteMatch();
+  return (
+    <Switch>
+      <Route path={`${match.url}/`} exact component={MainUser} />
+      <Route path={`${match.url}/:id`} component={DetailUser} />
+    </Switch>
+  );
+}
+export default UserPage;",javascript
+"!function(r){function t(o){if(e[o])return e[o].exports;var n=e[o]={exports:{},id:o,loaded:!1};return r[o].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var e={};t.m=r,t.c=e,t.p="""",t(0)}([function(){""use strict""}]);",javascript
+"package container
+import (
+	""github.com/proofhouse/proofhouse/pkg/service""
+	""sync""
+)
+var (
+	serviceFactoriesMu sync.Mutex
+	serviceFactories = make(map[string]service.Factory)
+)
+func RegisterServiceFactory(factory service.Factory) {
+	serviceFactoriesMu.Lock()
+	defer serviceFactoriesMu.Unlock()
+	serviceFactories[factory.Type()] = factory
+}
+func GetServiceFactory(t string) service.Factory {
+	return serviceFactories[t]
+}",go
+"
+package org.dromara.hmily.core.service;
+import org.dromara.hmily.core.context.HmilyTransactionContext;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+@FunctionalInterface
+public interface HmilyTransactionHandler {
+    
+    Object handler(ProceedingJoinPoint point, HmilyTransactionContext hmilyTransactionContext) throws Throwable;
+}",java
+"module CostAnalysis
+  class ProjectContact
+    attr_accessor :role, :name, :email
+    def initialize(role, name, email)
+      @role = role
+      @name = name
+      @email = email
+    end
+    def pi?
+      @role == ""primary-pi""
+    end
+  end
+end",ruby
+"
+
+
+
+
+
+
+
+using namespace network;
+using namespace libbase;
+using namespace leetrpc;
+void Print(std::shared_ptr<double> ret) {
+  std::cout << ""use asyn function: ret = "" << *ret << std::endl;
+}
+int main() {
+  RpcClient client(""127.0.0.1"", 8080);
+  AddClientStub stub(client);
+  RpcStatus rs;
+  rs.TimeoutNotify();
+  int ret = stub.Add(1, 2, &rs, 2);
+  if (rs.Ok()) {
+    std::cout << ret << std::endl;
+  } else {
+    std::cout << rs.ToString() << std::endl;
+  }
+  std::cout << stub.Add(1, 2) << std::endl;
+    stub.Add(2, 4, Print, 2);
+    stub.Add(2, 3, Print);
+    std::cout << ""Call asyn Add"" << std::endl;
+    sleep(6);
+  return 0;  
+}",cpp
+"
+
+
+class List2 < List
+  include Enumerable
+
+  def each
+    n = @head
+    while n != nil
+      yield n.value
+      n = n.next
+    end  
+  end
+
+  def ins_start(value)
+    if @head != nil && @head.next != nil
+      n = @head
+      @head = Node.new(value, n, nil)
+      n.prev = @head
+    elsif @head != nil
+      n = @head
+      @head = Node.new(value, n, nil)
+      n.prev = @head
+      @tail = n
+    else
+      @head = Node.new(value, nil, nil)
+      @tail = @head
+    end
+  end
+
+  def ins_end(value)
+    if @tail != nil
+      @tail = Node.new(value, nil, @tail)
+      n = @tail.prev
+      n.next = @tail
+    else
+      @head = Node.new(value, nil, nil)
+      @tail = @head
+    end
+  end
+
+  def extract_first
+    e = @head
+    @head = e.next
+    if @head != nil
+      @head.prev = nil
+    else
+      @tail = @head
+    end
+    e
+  end  
+
+  def extract_last
+    e = @tail
+    @tail = e.prev
+    if @tail != nil
+      @tail.next = nil
+    else
+      @head = @tail
+    end
+    e
+  end  
+end",ruby
+"
+
+
+
+namespace Utils_WS
+{
+double pvalueToSignificance(double p)
+{
+
+    return TMath::NormQuantile(1.0 - p);
+}
+double significanceToPvalue(double z)
+{
+
+    return 1.0 - ROOT::Math::gaussian_cdf(z);
+}
+double q0ToSignificance(double q0)
+{
+    return TMath::Sqrt(q0);
+}
+double nllToQ0(double nllMu0, double nllMuHat, double muHat)
+{
+    double q0 = (muHat < 0) ? 0 : (2 * (nllMu0 - nllMuHat));
+    if (q0 < 0.) q0 = 0;
+    return q0;
+}
+}",cpp
+"﻿SELECT 
+	* 
+FROM [core].[Batch]
+WHERE [CreationTime] > DATEADD(MINUTE, @minutesAgo * -1, GETDATE())",mysql
+"begin;
+alter table users add lastlogin timestamp;
+end;",mysql
+"const { app, BrowserWindow } = require('electron')
+let win;
+function createWindow () {
+
+  win = new BrowserWindow({
+    width: 1000, 
+    minWidth: 1000,
+    height: 600,
+    backgroundColor: '#ffffff',
+    icon: `file://${__dirname}/dist/assets/logo.png`
+  })
+  win.loadURL(`file://${__dirname}/dist/index.html`)
+
+
+
+  win.on('closed', function () {
+    win = null
+  })
+}
+
+app.on('ready', createWindow)
+
+app.on('window-all-closed', function () {
+
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+app.on('activate', function () {
+
+  if (win === null) {
+    createWindow()
+  }
+})",javascript
+"
+require 'spec_helper'
+RSpec.describe TickeosB2b::Api::Cancel do
+  subject(:cancel) { described_class }
+  let(:request_body) do
+    <<~XML
+      <?xml version=\""1.0\""?>
+      <TICKeosProxy apiVersion=\""\"" version=\""\"" instanceName=\""\"">
+        <txCancelRequest go=\""1\"" context=\""merchant\"" orderProductSerial=\""42\""/>
+      </TICKeosProxy>
+    XML
+  end
+  let(:operation) do
+    cancel.request_body(
+      server_order_product_serial: server_order_product_serial
+    )
+  end
+  let(:server_order_product_serial) { '42' }
+  describe '#request_body' do
+    it 'returns the correct xml request body' do
+      expect(operation).to eq(request_body)
+    end
+  end
+  describe '#request_method' do
+    it 'returns the correct request method' do
+      expect(cancel.request_method).to eq(:post)
+    end
+  end
+end",ruby
+"import pytest
+from pages.aplication import Application
+def pytest_addoption(parser):
+    parser.addoption('--browser_name', action='store', default=""chrome"", help=""Choose browser: chrome or firefox"")
+    parser.addoption('--base_url', action='store', default='https://prodoctorov.ru/new/rate/doctor/12/'
+                     , help=""Choose base_url"")
+@pytest.fixture
+def app(request):
+    browser_name = request.config.getoption(""--browser_name"")  # для вызова из командной строки и выбора браузера
+    base_url = request.config.getoption(""--base_url"")
+    fixture = Application(browser_name=browser_name, base_url=base_url)
+    yield fixture
+    print(""\nquit browser.."")
+    fixture.destroy()
+    return fixture",python
+"import pytest
+import copy
+from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).absolute().parent.parent))
+from swimmer_abm.model import Model
+def test_init():
+    model = Model(nswimmers=3)
+    assert len(model.swimmers) == 3
+def test_step():
+    model = Model(nswimmers=1)
+    swimmer = copy.deepcopy(model.swimmers[0])
+    dt = 1
+    swimmer.swim(dt)
+    model.step(dt)
+    assert swimmer.pos == model.swimmers[0].pos
+def test_repr():
+    model = Model(nswimmers=1)
+    assert isinstance(str(model), str)",python
+"class Person {
+    constructor(first_name, last_name) {
+      this.first_name = first_name;
+      this.last_name = last_name;
+    }
+    full_name() {
+      return this.first_name + "" "" + this.last_name;
+    }
+  }
+  class Staff extends Person {
+     constructor(first_name, last_name, persno) {
+           super(first_name, last_name);
+          this.persno = persno;
+      }
+      info() {
+        return this.persno + "" "" + this.full_name();
+      }
+  }
+const staff = new Staff('Jane', 'Fuller', '0643256');
+const message = (person) => `For more information, please contact Ms. ${person.last_name.toUpperCase()}, ${person.first_name}.`
+console.log(staff.info());
+console.log(message(staff));",javascript
+"package sample
+import (
+	. ""github.com/onsi/ginkgo""
+	. ""github.com/onsi/gomega""
+)
+var _ = Describe(""Sample"", func() {
+	Describe(""Calculating square root"", func() {
+		Context(""of the number 4"", func() {
+			It(""should result 2"", func() {
+				Setup()
+				Expect(GetResult()).To(Equal(2.0))
+			})
+		})
+	})
+})",go
+"from rest_framework.permissions import SAFE_METHODS, BasePermission
+class IsAdminOrReadOnly(BasePermission):
+    """"""
+    The request is authenticated as an Admin user or is Read Only
+    """"""
+    def has_permission(self, request, view):
+        return bool(
+            request.method in SAFE_METHODS or
+            request.user and
+            request.user.is_staff
+        )",python
+"load_zone	allow_overgeneration	overgeneration_penalty_per_mw	allow_unserved_energy	unserved_energy_penalty_per_mwh	max_unserved_load_penalty_per_mw	export_penalty_cost_per_mwh
+Zone1	1	99999999.0	1	99999999.0	0.0	0.0
+Zone2	1	99999999.0	1	99999999.0	0.0	0.0",mysql
+"cask ""brave-browser-dev"" do
+  version ""89.1.22.63,122.63""
+  sha256 ""95911cca527daab3fb1ad726424387fd60a7bf7334e54fac73353d306b202ec7""
+  url ""https://updates-cdn.bravesoftware.com/sparkle/Brave-Browser/dev/#{version.after_comma}/Brave-Browser-Dev-x64.dmg"",
+      verified: ""updates-cdn.bravesoftware.com/sparkle/Brave-Browser/""
+  appcast ""https://updates.bravesoftware.com/sparkle/Brave-Browser/dev/appcast.xml""
+  name ""Brave Dev""
+  desc ""Web browser focusing on privacy""
+  homepage ""https://brave.com/download-dev/""
+  auto_updates true
+  app ""Brave Browser Dev.app""
+  zap trash: [
+    ""~/Library/Application Support/brave"",
+    ""~/Library/Preferences/com.electron.brave.plist"",
+    ""~/Library/Saved Application State/com.electron.brave.savedState"",
+  ]
+end",ruby
+"ALTER TABLE db_version CHANGE COLUMN required_7908_01_mangos_creature_template required_7908_02_mangos_creature_addon bit;
+ALTER TABLE creature_addon
+  DROP COLUMN bytes0;",mysql
+"UPDATE ACT_HI_COMMENT
+SET USER_ID_ = `pseudonym`
+WHERE USER_ID_ = `username`",mysql
+"'use strict';
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const model = sequelize['import'](path.join(__dirname, file));
+    db[model.name] = model;
+  });
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+module.exports = db;",javascript
+"package protofiles
+import (
+	""testing""
+	""github.com/stretchr/testify/assert""
+	""google.golang.org/protobuf/proto""
+	""google.golang.org/protobuf/types/known/structpb""
+)
+func TestYamlProto(t *testing.T) {
+	ast := assert.New(t)
+	jsonContext := map[string]interface{}{
+		""data"": map[string]interface{}{
+			""value"": 1,
+		},
+	}
+	structValue, err := structpb.NewStruct(jsonContext)
+	ast.Nil(err)
+	celRequest := CelRequest{
+		Context:    structValue,
+		Expression: ""data.value == 1"",
+	}
+	ast.NotNil(celRequest)
+	out, err := proto.Marshal(&celRequest)
+	ast.Nil(err)
+	ast.NotNil(out)
+	celReq2 := &CelRequest{}
+	err = proto.Unmarshal(out, celReq2)
+	ast.Nil(err)
+	ast.NotNil(celReq2)
+	ast.Equal(celRequest.Expression, celReq2.Expression)
+}",go
+"class AdminController < ApplicationController
+  before_action :authenticate_admin!
+  layout 'admin/application'
+  def index
+  end
+end",ruby
+"package revel
+type Filter func(c *Controller, filterChain []Filter)
+
+
+var Filters = []Filter{
+	PanicFilter,             // Recover from panics and display an error page instead.
+	RouterFilter,            // Use the routing table to select the right Action
+	FilterConfiguringFilter, // A hook for adding or removing per-Action filters.
+	ParamsFilter,            // Parse parameters into Controller.Params.
+	SessionFilter,           // Restore and write the session cookie.
+	FlashFilter,             // Restore and write the flash cookie.
+	ValidationFilter,        // Restore kept validation errors and save new ones from cookie.
+	I18nFilter,              // Resolve the requested language
+	InterceptorFilter,       // Run interceptors around the action.
+	ActionInvoker,           // Invoke the action.
+}
+
+var (
+	NilFilter = func(_ *Controller, _ []Filter) {}
+	NilChain  = []Filter{NilFilter}
+)",go
+"require 'spec_helper'
+describe ProtectedBranch::MergeAccessLevel do
+  it { is_expected.to validate_inclusion_of(:access_level).in_array([Gitlab::Access::MASTER, Gitlab::Access::DEVELOPER, Gitlab::Access::NO_ACCESS]) }
+end",ruby
+"package cmd
+import (
+	""github.com/go-errors/errors""
+	""github.com/spf13/cobra""
+)
+func init() {
+	rootCmd.AddCommand(rebaseCmd)
+}
+var rebaseCmd = &cobra.Command{
+	Use:   ""rebase"",
+	Short: ""Update the Git repository with recent changes from p4"",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if err := login(); err != nil {
+			return err
+		}
+		gitCmd := newCmd(""git"", ""p4"", ""rebase"")
+		if err := gitCmd.Run(); err != nil {
+			return errors.Wrap(err, 1)
+		}
+		return nil
+	},
+}",go
+"WebDJ::Application.configure do
+
+
+
+
+  config.cache_classes = false
+
+  config.whiny_nils = true
+
+  config.consider_all_requests_local       = true
+  config.action_controller.perform_caching = false
+
+  config.action_mailer.raise_delivery_errors = false
+
+  config.active_support.deprecation = :log
+
+  config.action_dispatch.best_standards_support = :builtin
+
+  config.active_record.mass_assignment_sanitizer = :strict
+
+
+  config.active_record.auto_explain_threshold_in_seconds = 0.5
+end",ruby
+"from django.shortcuts import render
+def contrib_file(request):
+    return render(request, ""dpaste/contribute.html"")",python
+"CREATE TABLE IF NOT EXISTS poll_vote (
+    id             SERIAL    NOT NULL,
+    user_id        SERIAL    NOT NULL,
+    poll_id        SERIAL    NOT NULL,
+    poll_option_id SERIAL    NOT NULL,
+    vote_time      TIMESTAMP NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (id),
+    CONSTRAINT fk_poll_vote_user
+        FOREIGN KEY (user_id)
+            REFERENCES app_user(id)
+                ON DELETE CASCADE,
+    CONSTRAINT fk_poll_vote_poll
+        FOREIGN KEY (poll_id)
+            REFERENCES poll(id)
+                ON DELETE CASCADE,
+    CONSTRAINT fk_poll_vote_poll_option
+        FOREIGN KEY (poll_option_id)
+            REFERENCES poll_option(id)
+                ON DELETE CASCADE
+);",mysql
+"import createSvgIcon from './utils/createSvgIcon';
+import { jsx as _jsx } from ""react/jsx-runtime"";
+export default createSvgIcon( _jsx(""path"", {
+  d: ""M12 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.95-4c.59 0 1.06.51 1 1.09-.02.15-.21 4.06-3.95 5.31V21c0 .55-.45 1-1 1s-1-.45-1-1v-5h-2v5c0 .55-.45 1-1 1s-1-.45-1-1V10.1c-.3.1-.5.2-.6.3-.46.36-1.17.87-1.36 2.67-.05.52-.47.93-1 .93-.58 0-1.05-.49-1-1.07.13-1.6.62-2.98 2.07-4.22C8.21 7.81 10 7 12 7s2.68-.46 3.48-1.06c.43-.34 1.28-.99 1.48-3.02.05-.52.47-.92.99-.92zM5 16h1c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1z""
+}), 'HailRounded');",javascript
+"package com.vip.saturn.job.console.utils;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
+public class ConsoleThreadFactory implements ThreadFactory {
+    private AtomicInteger threadNumber = new AtomicInteger(1);
+    private boolean isMultiple = true;
+    private String threadName;
+    public ConsoleThreadFactory(String threadName, boolean isMultiple) {
+        this.isMultiple = isMultiple;
+        this.threadName = threadName;
+    }
+    @Override
+    public Thread newThread(Runnable r) {
+        String name = isMultiple ? threadName + ""-"" + threadNumber.getAndIncrement() : threadName;
+        Thread t = new Thread(r, name);
+        if (t.isDaemon()) {
+            t.setDaemon(false);
+        }
+        if (t.getPriority() != Thread.NORM_PRIORITY) {
+            t.setPriority(Thread.NORM_PRIORITY);
+        }
+        return t;
+    }
+}",java
+"insert into employee (first_name, last_name) values ('Bab', 'Coogan');
+insert into employee (first_name, last_name) values ('Drona', 'Grimston');
+insert into employee (first_name, last_name) values ('Barnard', 'Slowgrove');
+insert into employee (first_name, last_name) values ('Doralynne', 'Jobe');
+insert into employee (first_name, last_name) values ('Mariele', 'Rait');
+insert into employee (first_name, last_name) values ('Auria', 'Grouen');
+insert into employee (first_name, last_name) values ('Willis', 'Biles');
+insert into employee (first_name, last_name) values ('Humbert', 'Mounsie');
+insert into employee (first_name, last_name) values ('Ferris', 'Caff');
+insert into employee (first_name, last_name) values ('Zondra', 'Janku');",mysql
+"
+package edu.internet2.middleware.grouper.internal.dao;
+import java.util.List;
+import java.util.Set;
+import edu.internet2.middleware.grouper.messaging.GrouperMessageHibernate;
+
+public interface MessageDAO extends GrouperDAO {
+  
+  public Set<GrouperMessageHibernate> findByFromMemberId(String fromMemberId);
+  
+  public List<GrouperMessageHibernate> findByQueue(String queue, int pageSize);
+  
+  public GrouperMessageHibernate findById(String id, boolean exceptionIfNotFound);
+  
+  public void saveOrUpdate(GrouperMessageHibernate message);
+  
+  public void delete(GrouperMessageHibernate message);
+}",java
+"package constant
+const (
+
+	NacosDefaultGroup  = ""SEATA_GROUP""
+
+	NacosDefaultDataID = ""seata""
+
+	NacosKey = ""nacos""
+
+	FileKey = ""file""
+)",go
+"
+using namespace System;
+using namespace Aspose::Pdf;
+using namespace Aspose::Pdf::Text;
+void ExtractTextFromRangeOfPages()
+{
+
+	auto extractor = MakeObject<Facades::PdfExtractor>();
+	extractor->BindPdf(u""..\\Data\\Text\\ExtractText-PageRange.pdf"");
+
+	extractor->set_StartPage(1);
+	extractor->set_EndPage(1);
+
+	extractor->ExtractText();
+	auto memStream = MakeObject<IO::MemoryStream>();
+	extractor->GetText(memStream);
+	auto unicode = System::Text::Encoding::get_Unicode();
+	String allText = unicode->GetString(memStream->ToArray());
+	Console::WriteLine(allText);
+
+}",cpp
