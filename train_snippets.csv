@@ -3635,7 +3635,30 @@ describe ProjectImportState, type: :model do
     it { is_expected.to validate_presence_of(:project) }
   end
 end",ruby
-"path  = REQUEST_PATH;spath = string_split( path, '/', 2 );tid   = spath[1];fpath = substr( spath[2], 0, len( spath[2] ) - 4 ) + '.wmv';printraw('<esi:vars>' );print(   '<?wsx version=""1.0""?>\n' );print(   '<smil>\n' );print(   '  <media src=""/7/456/43766/v0001/vodvcast.download.akamai.com/43813/test/' );print(   fpath + '?tid=' + tid + '""/>\n' );print(   '</smil>\n' );printraw('</esi:vars>' );if ( ! exists( thisVar ) ){  print('variable thisVar does NOT exist.\n');  printv(varName['key name']);}printv('dollars $ and dangerous chars, such as ""<""');printv( 'just make var printing easy: ""' + spath + '""\n' );printv( 'testing slash escaping: \\ (<-- one slash + ESI escaping = two slashes)\n\n^-- empty line\r\n\n' );",javascript
+"
+
+path  = REQUEST_PATH;
+spath = string_split( path, '/', 2 );
+tid   = spath[1];
+fpath = substr( spath[2], 0, len( spath[2] ) - 4 ) + '.wmv';
+
+printraw('<esi:vars>' );
+print(   '<?wsx version=""1.0""?>\n' );
+print(   '<smil>\n' );
+print(   '  <media src=""/7/456/43766/v0001/vodvcast.download.akamai.com/43813/test/' );
+print(   fpath + '?tid=' + tid + '""/>\n' );
+print(   '</smil>\n' );
+printraw('</esi:vars>' );
+
+if ( ! exists( thisVar ) )
+{
+  print('variable thisVar does NOT exist.\n');
+  printv(varName['key name']);
+}
+
+printv('dollars $ and dangerous chars, such as ""<""');
+printv( 'just make var printing easy: ""' + spath + '""\n' );
+printv( 'testing slash escaping: \\ (<-- one slash + ESI escaping = two slashes)\n\n^-- empty line\r\n\n' );",javascript
 "require ""active_support/core_ext/integer/time""
 
 
@@ -17301,7 +17324,7 @@ const GeoChart = () => {
 			]}
 
 
-			mapsApiKey=""AIzaSyApGSRs5COo6qvzuX1MO8n5N6VlbUzfiCo""
+			mapsApiKey=""YOUR_GOOGLE_API_KEY_HERE""
 			rootProps={{ 'data-testid': '1' }}
 		/>
 	)
@@ -32520,7 +32543,7 @@ const cors = require('cors');
 const routes = require('./routes');
 const app = express();
 mongoose.connect(
-  ""mongodb+srv://omnistack:omnistack@cluster0-qny8w.mongodb.net/week10?retryWrites=true&w=majority"",
+  ""mongodb+srv://USERNAME:PASSWORD@cluster.mongodb.net/DATABASE?retryWrites=true&w=majority"",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
