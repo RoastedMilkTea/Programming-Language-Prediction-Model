@@ -2570,7 +2570,8 @@ func WithExpireTimeout(expireTimeout time.Duration) Option {
 		c.expireTimeout = expireTimeout
 	}
 }",go
-"
+"
+
 ;
 ;
 ;
@@ -4759,3 +4760,60 @@ void ExtractTextFromRangeOfPages()
 	Console::WriteLine(allText);
 
 }",cpp
+"def multiply(a, b):
+    return a * b",python
+"for i in range(5):
+    print(i ** 2)",python
+"class Counter:
+    def __init__(self):
+        self.value = 0",python
+"public class Hello {
+    public static void main(String[] args) {
+        System.out.println(""Hi"");
+    }
+}",java
+"int sum(int a, int b) {
+    return a + b;
+}",java
+"class Point {
+    int x, y;
+}",java
+"const add = (a, b) => a + b;",javascript
+"let nums = [1,2,3];
+nums.forEach(n => console.log(n));",javascript
+"class Node {
+    constructor(v) { this.v = v; }
+}",javascript
+"package main
+import ""fmt""
+func main() { fmt.Println(""Hello"") }",go
+"func sum(a int, b int) int {
+    return a + b
+}",go
+"type Point struct {
+    x int
+    y int
+}",go
+"def greet(name)
+  puts ""Hello #{name}""
+end",ruby
+"3.times do |i|
+  puts i
+end",ruby
+"class Person
+  attr_accessor :name
+end",ruby
+"SELECT name, age FROM users WHERE age > 20;",mysql
+"INSERT INTO books(title, author) VALUES ('HELLO WORLD', 'Jessie');",mysql
+UPDATE accounts SET balance = balance + 100 WHERE id = 5;,mysql
+"#include <iostream>
+int main() {
+    std::cout << ""Hello"";
+}",cpp
+"int add(int a, int b) {
+    return a + b;
+}",cpp
+"class Point {
+public:
+    int x, y;
+};",cpp

@@ -16,7 +16,7 @@ import re
 TRAIN_PATH = "train_snippets.csv"
 VAL_PATH   = "val_snippets.csv"
 
-EMBED_DIM = 128
+EMBED_DIM = 256
 HIDDEN_DIM = 256
 NUM_LAYERS = 2
 DROPOUT = 0.5
@@ -33,6 +33,21 @@ def simple_tokenizer(code):
     """Basic tokenizer for code: split by non-alphanumeric characters."""
     tokens = re.findall(r"[A-Za-z_]+|\d+|[(){};.,=+\-*/<>]", code)
     return tokens
+
+def code_tokenizer(code):
+    tokens = re.findall(
+        r'[A-Za-z_][A-Za-z_0-9]*|'           # identifiers / keywords
+        r'\".*?\"|\'.*?\'|'                  # string / char literals
+        r'==|!=|<=|>=|===|!==|'              # comparison
+        r'->|=>|::|<<|>>|'                   # language-specific ops
+        r'\+\+|--|\+=|-=|\*=|/=|%=|'         # assignment ops
+        r'//.*?$|/\*.*?\*/|'                 # comments
+        r'[(){}\[\];.,=+\-*/<>]|',           # punctuation
+        code,
+        flags=re.MULTILINE | re.DOTALL
+    )
+    return [t for t in tokens if t.strip() != '']
+
 
 
 class CodeDataset(Dataset):
@@ -53,7 +68,7 @@ class CodeDataset(Dataset):
         if build_vocab:
             tokens = []
             for c in self.codes:
-                tokens.extend(simple_tokenizer(c))
+                tokens.extend(code_tokenizer(c))
             vocab = {"<PAD>": 0, "<UNK>": 1}
             for t in tokens:
                 if t not in vocab:
@@ -64,7 +79,7 @@ class CodeDataset(Dataset):
         self.data = []
         MAX_LEN = 200  # truncate long code samples to avoid exploding sequence length
         for code in self.codes:
-            tokens = simple_tokenizer(code)
+            tokens = code_tokenizer(code)
             token_ids = [self.vocab.get(t, 1) for t in tokens][:MAX_LEN]  # trim sequence
             self.data.append(torch.tensor(token_ids, dtype=torch.long))
 
@@ -85,24 +100,42 @@ def collate_fn(batch):
 # ==========================
 # MODEL DEFINITION
 # ==========================
+class Attention(nn.Module):
+    def __init__(self, hidden_dim):
+        super().__init__()
+        self.att = nn.Linear(hidden_dim, 1)
+
+    def forward(self, outputs): 
+        # outputs: (B, T, H)
+        weights = torch.softmax(self.att(outputs).squeeze(-1), dim=1)  # (B, T)
+        context = torch.sum(outputs * weights.unsqueeze(-1), dim=1)   # (B, H)
+        return context
+
 class RNNClassifier(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes,
                  num_layers=1, dropout=0.3):
         super(RNNClassifier, self).__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
         self.dropout = nn.Dropout(dropout)
-        self.lstm = nn.GRU(embed_dim, hidden_dim, num_layers=num_layers,
-                        batch_first=True, dropout=dropout)
-
-        self.fc = nn.Linear(hidden_dim, num_classes)
+        self.lstm = nn.LSTM(embed_dim, hidden_dim, num_layers=num_layers,
+                    bidirectional=True, batch_first=True, dropout=dropout)
         self.dropout = nn.Dropout(dropout)
+        self.fc = nn.Linear(hidden_dim*2, num_classes)
+        self.attention = Attention(hidden_dim*2)
 
     def forward(self, x):
-        x = self.embedding(x)
-        out, (h, c) = self.lstm(x)
-        out = self.dropout(out[:, -1, :])  # last time step
-        out = self.fc(out)
+        x = self.embedding(x)                    
+        outputs, (h, c) = self.lstm(x)# h shape: (num_layers*2, B, H)
+
+        context = self.attention(outputs)
+        context = self.dropout(context)      
+        # final = torch.cat((last_fw, last_bw), dim=1)  
+
+        # final = self.dropout(final)
+
+        out = self.fc(context)                  
         return out
+
 
 
 # ==========================
